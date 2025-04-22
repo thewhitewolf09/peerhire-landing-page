@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerHire | Connecting the Next Generation of Skilled Freelancers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #6bc3eb 0%, #20175e 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, #6bc3eb, #20175e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(107, 195, 235, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(107, 195, 235, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(107, 195, 235, 0);
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        .highlight-card {
+            transition: all 0.3s ease;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(107, 195, 235, 0.3);
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: .15em solid #6bc3eb;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #6bc3eb;
+            }
+        }
+
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .wave-bg svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+
+        .wave-bg .shape-fill {
+            fill: #6bc3eb;
+            opacity: 0.1;
+        }
+
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .countdown-number {
+            animation: countdownPop 1s ease infinite alternate;
+        }
+
+        @keyframes countdownPop {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(107, 195, 235, 0.5);
+            }
+
+            to {
+                box-shadow: 0 0 20px rgba(107, 195, 235, 0.8);
+            }
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .process-step {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 30px;
+        }
+
+        .process-step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #6bc3eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .process-step-content {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #6bc3eb;
+        }
+
+        .process-step-title {
+            font-weight: 600;
+            color: #20175e;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .process-step-desc {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .process-divider {
+            height: 20px;
+            width: 2px;
+            background-color: #6bc3eb;
+            margin-left: 19px;
+            margin-bottom: -10px;
+        }
+
+        .icon-rotate {
+            transform: rotate(180deg);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Coming Soon Banner -->
+    <div class="bg-[#20175e] text-white py-2 px-4 text-center">
+        <div class="container mx-auto flex items-center justify-center">
+            <span class="mr-2 animate-pulse">🚀</span>
+            <p class="text-sm md:text-base">We're launching soon! Join our waitlist to get early access & exclusive
+                benefits.</p>
+            <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                class="ml-4 text-sm font-medium bg-[#6bc3eb] hover:bg-[#4fa8d4] px-3 py-1 rounded-full transition">Join
+                Now</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center">
+        <div class="h-10 w-auto flex items-center justify-center mr-2">
+          <img src="./images/logo.png" alt="PeerHire Logo" class="h-full object-contain">
+        </div>
+      </div>
+  
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex space-x-8">
+        <a href="#how-it-works" class="text-gray-600 hover:text-[#6bc3eb] transition">How It Works</a>
+        <a href="#features" class="text-gray-600 hover:text-[#6bc3eb] transition">Features</a>
+        <a href="#pricing" class="text-gray-600 hover:text-[#6bc3eb] transition">Pricing</a>
+        <a href="#faq" class="text-gray-600 hover:text-[#6bc3eb] transition">FAQs</a>
+        <a href="#about" class="text-gray-600 hover:text-[#6bc3eb] transition">About</a>
+      </div>
+  
+      <!-- CTA Button -->
+      <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+        class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-4 py-2 rounded-full font-medium transition md:block hidden pulse">
+        Join Waitlist
+      </button>
+  
+      <!-- Hamburger Icon -->
+      <button onclick="toggleSidebar()" class="md:hidden text-gray-600 focus:outline-none">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Mobile Sidebar -->
+  <div id="mobileSidebar"
+    class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+    <div class="flex items-center justify-between p-4 border-b">
+      <div class="h-8">
+        <img src="./images/logo.png" alt="PeerHire Logo" class="h-full object-contain">
+      </div>
+      <button onclick="toggleSidebar()" class="text-gray-600 focus:outline-none">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+    </div>
+    <nav class="flex flex-col p-4 space-y-4">
+      <a href="#how-it-works" class="text-gray-700 hover:text-[#6bc3eb] transition">How It Works</a>
+      <a href="#features" class="text-gray-700 hover:text-[#6bc3eb] transition">Features</a>
+      <a href="#pricing" class="text-gray-700 hover:text-[#6bc3eb] transition">Pricing</a>
+      <a href="#faq" class="text-gray-700 hover:text-[#6bc3eb] transition">FAQs</a>
+      <a href="#about" class="text-gray-700 hover:text-[#6bc3eb] transition">About</a>
+      <a href="https://forms.gle/GbUevjkokZFDpa4t5" class="mt-4 bg-[#6bc3eb] text-white text-center py-2 rounded-full font-medium hover:bg-[#4fa8d4] transition">
+        Join Waitlist
+      </a>
+    </nav>
+  </div>
+  
+
+    <!-- Hero Section -->
+    <section id="about" class="py-16 md:py-24 bg-gradient-to-r from-[#f8fcff] to-[#e6f4ff] relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-[#6bc3eb] opacity-10 -mr-32 -mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#20175e] opacity-10 -ml-64 -mb-64"></div>
+
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0 relative z-10">
+                <div class="inline-block px-4 py-2 bg-[#6bc3eb] bg-opacity-20 rounded-full text-[#20175e] mb-4">
+                    <span class="font-medium">🚀 Student Freelancing Revolution</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-[#20175e] mb-4 leading-tight">
+                    <span class="typing-animation">Connecting The Next</span><br>
+                    <span class="text-gradient">Generation Of Skilled Freelancers.</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8">
+                    AI-powered matching. Blockchain-secured payments. 6-8% commission only. The future of student
+                    freelancing is here.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                        class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-6 py-3 rounded-full font-medium transition shadow-lg pulse">
+                        Join the Waitlist
+                    </button>
+                    <button
+                        class="border-2 border-[#6bc3eb] text-[#6bc3eb] hover:bg-[#6bc3eb] hover:text-white px-6 py-3 rounded-full font-medium transition flex items-center justify-center">
+                        <i class="fas fa-play-circle mr-2"></i> Watch Demo
+                    </button>
+                </div>
+
+                <div class="mt-8 flex items-center">
+                    <div class="flex -space-x-2">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg"
+                            class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                            class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg"
+                            class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600"><span class="font-bold text-[#20175e]">1,200+</span> students
+                            already joined</p>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <span class="text-sm text-gray-600 ml-1">5.0 (200+ reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center relative">
+                <div class="relative w-full max-w-lg">
+                    <div class="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-[#6bc3eb] opacity-20 animate-ping">
+                    </div>
+                    <div
+                        class="absolute -bottom-10 -right-10 w-32 h-32 rounded-full bg-[#20175e] opacity-20 animate-ping animation-delay-1000">
+                    </div>
+                    <div class="relative z-10 floating">
+                        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                            <div class="bg-[#20175e] text-white p-4 flex items-center">
+                                <div class="w-3 h-3 rounded-full bg-[#6bc3eb] mr-2"></div>
+                                <div class="w-3 h-3 rounded-full bg-gray-400 mr-2"></div>
+                                <div class="w-3 h-3 rounded-full bg-gray-400 mr-2"></div>
+                                <div class="flex-1 text-center text-sm font-medium">PeerHire Dashboard</div>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex items-center mb-4">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-3">
+                                        <i class="fas fa-user-graduate text-[#6bc3eb]"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-[#20175e]">Welcome back, Sarah!</div>
+                                        <div class="text-xs text-gray-500">Computer Science Student</div>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-3 gap-2 mb-4">
+                                    <div class="bg-[#6bc3eb] bg-opacity-10 p-2 rounded-lg text-center">
+                                        <div class="text-[#20175e] font-bold">5</div>
+                                        <div class="text-xs text-gray-600">Active Gigs</div>
+                                    </div>
+                                    <div class="bg-[#6bc3eb] bg-opacity-10 p-2 rounded-lg text-center">
+                                        <div class="text-[#20175e] font-bold">$1,240</div>
+                                        <div class="text-xs text-gray-600">Earnings</div>
+                                    </div>
+                                    <div class="bg-[#6bc3eb] bg-opacity-10 p-2 rounded-lg text-center">
+                                        <div class="text-[#20175e] font-bold">4.9★</div>
+                                        <div class="text-xs text-gray-600">Rating</div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="flex justify-between text-xs text-gray-500 mb-1">
+                                        <span>AI Matched Projects</span>
+                                        <span>3 new</span>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center p-2 bg-[#f5f9ff] rounded-lg">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-2">
+                                                <i class="fas fa-laptop-code text-xs text-[#6bc3eb]"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="text-sm font-medium text-[#20175e]">Web Dev</div>
+                                                <div class="text-xs text-gray-500">$250 - 2 weeks</div>
+                                            </div>
+                                            <button
+                                                class="text-xs bg-[#6bc3eb] text-white px-2 py-1 rounded">Apply</button>
+                                        </div>
+                                        <div class="flex items-center p-2 bg-[#f5f9ff] rounded-lg">
+                                            <div
+                                                class="w-8 h-8 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-2">
+                                                <i class="fas fa-mobile-alt text-xs text-[#6bc3eb]"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <div class="text-sm font-medium text-[#20175e]">App Design</div>
+                                                <div class="text-xs text-gray-500">$180 - 10 days</div>
+                                            </div>
+                                            <button
+                                                class="text-xs bg-[#6bc3eb] text-white px-2 py-1 rounded">Apply</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center">
+                                    <div
+                                        class="inline-block bg-[#6bc3eb] bg-opacity-10 text-[#6bc3eb] text-xs px-3 py-1 rounded-full">
+                                        <i class="fas fa-bolt mr-1"></i> 3 more matches
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wave-bg">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
+
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 scroll-indicator hidden md:block">
+            <i class="fas fa-chevron-down text-[#6bc3eb] text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-[#20175e] mb-2 countdown-number">1,200+</div>
+                    <div class="text-gray-600">Student Freelancers on the waitlist</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-[#6bc3eb] mb-2 countdown-number">6-8%</div>
+                    <div class="text-gray-600">Student Commission</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-[#20175e] mb-2 countdown-number">10-12%</div>
+                    <div class="text-gray-600">Grads & Professionals Commission</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-[#6bc3eb] mb-2 countdown-number">100%</div>
+                    <div class="text-gray-600">Payment Security</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#20175e] mb-4">How PeerHire Works</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Three simple steps to connect with the perfect talent
+                    or project</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition">
+                    <div
+                        class="w-16 h-16 rounded-full bg-[#6bc3eb] bg-opacity-10 flex items-center justify-center mb-6">
+                        <i class="fas fa-search text-2xl text-[#6bc3eb]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#20175e] mb-3">Discover Talent or Projects</h3>
+                    <p class="text-gray-600">AI matches you based on skills, intent, and reputation — not just keywords.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition">
+                    <div
+                        class="w-16 h-16 rounded-full bg-[#6bc3eb] bg-opacity-10 flex items-center justify-center mb-6">
+                        <i class="fas fa-handshake text-2xl text-[#6bc3eb]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#20175e] mb-3">Secure, Trustless Agreements</h3>
+                    <p class="text-gray-600">Smart contracts + escrow = no ghosting, no guesswork.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition">
+                    <div
+                        class="w-16 h-16 rounded-full bg-[#6bc3eb] bg-opacity-10 flex items-center justify-center mb-6">
+                        <i class="fas fa-rocket text-2xl text-[#6bc3eb]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#20175e] mb-3">Deliver. Get Paid. Grow.</h3>
+                    <p class="text-gray-600">Track milestones, build your rep, and unlock full-time potential.</p>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <div class="inline-block relative">
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-[#6bc3eb] to-[#20175e] rounded-lg blur opacity-25">
+                    </div>
+                    <button id="showProcessBtn"
+                        class="relative bg-white border-2 border-[#6bc3eb] text-[#6bc3eb] hover:bg-[#6bc3eb] hover:text-white px-8 py-3 rounded-lg font-medium transition">
+                        See Detailed Process
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Process Modal -->
+    <div id="processModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="text-3xl font-bold text-[#20175e] mb-6 text-center">PeerHire Detailed Process</h2>
+
+            <div class="process-steps-container">
+                <!-- Step 1 -->
+                <div class="process-step">
+                    <div class="process-step-number">1</div>
+                    <div class="process-step-content">
+                        <h3 class="process-step-title">Sign Up & Get Verified</h3>
+                        <p class="process-step-desc">
+                            Join as a freelancer, client, or both. Our platform uses blockchain-based identity
+                            verification to ensure authenticity.
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li>University email verification for students</li>
+                            <li>Skills & project preferences setup</li>
+                            <li>Upload your portfolio or previous work samples</li>
+                            <li>Set pricing and availability</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <!-- Step 2 -->
+                <div class="process-step">
+                    <div class="process-step-number">2</div>
+                    <div class="process-step-content">
+                        <h3 class="process-step-title">AI-Powered Smart Matching</h3>
+                        <p class="process-step-desc">
+                            Our ML model instantly finds the best-fit projects or freelancers using:
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li>Skill-based compatibility scoring</li>
+                            <li>Dynamic pricing and budget fit</li>
+                            <li>Past ratings and success likelihood</li>
+                            <li>Availability, timezone, and soft-skill fit</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <!-- Step 3 -->
+                <div class="process-step">
+                    <div class="process-step-number">3</div>
+                    <div class="process-step-content">
+                        <h3 class="process-step-title">Project Kickoff & Escrow Setup</h3>
+                        <p class="process-step-desc">
+                            Once matched, a smart contract handles everything:
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li>Define scope, milestones, and deliverables</li>
+                            <li>Sign smart contract agreement digitally</li>
+                            <li>Client funds locked into blockchain escrow</li>
+                            <li>Milestones and deadlines set by both parties</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <!-- Step 4 -->
+                <div class="process-step">
+                    <div class="process-step-number">4</div>
+                    <div class="process-step-content">
+                        <h3 class="process-step-title">Work Execution & Collaboration</h3>
+                        <p class="process-step-desc">
+                            Projects run on streamlined tools and real-time updates:
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li>Built-in chat and file sharing dashboard</li>
+                            <li>Automated progress reports and check-ins</li>
+                            <li>Milestone tracking with visual boards</li>
+                            <li>Version control and real-time commenting</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <!-- Step 5 -->
+                <div class="process-step">
+                    <div class="process-step-number">5</div>
+                    <div class="process-step-content">
+                        <h3 class="process-step-title">Milestone Review & Payout</h3>
+                        <p class="process-step-desc">
+                            After each milestone:
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li>Freelancer submits milestone deliverables</li>
+                            <li>Client has 72 hours to approve or request edits</li>
+                            <li>Smart contract auto-releases payment from escrow</li>
+                            <li>Disputes handled by decentralized arbitration if needed</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <!-- Step 6 -->
+                <div class="process-step">
+                    <div class="process-step-number">6</div>
+                    <div class="process-step-content">
+                        <h3 class="process-step-title">Final Delivery & Feedback</h3>
+                        <p class="process-step-desc">
+                            Once all milestones are complete:
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li>Freelancer uploads final deliverables</li>
+                            <li>Final escrow release triggers automatically</li>
+                            <li>Both parties leave immutable reviews</li>
+                            <li>Ratings influence future match quality</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="process-divider"></div>
+
+                <!-- Step 7 -->
+                <div class="process-step">
+                    <div class="process-step-number">7</div>
+                    <div class="process-step-content">
+                        <h3 class="process-step-title">Level Up Your Career</h3>
+                        <p class="process-step-desc">
+                            We’re not just a platform, we’re a launchpad:
+                        <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                            <li>AI-curated skill learning tracks based on project history</li>
+                            <li>Top freelancers get featured in our Talent Hub</li>
+                            <li>Direct hiring invites from companies via FTE pipeline</li>
+                            <li>Tokenized incentives and career coaching</li>
+                        </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')" class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-8 py-3 rounded-lg font-medium transition">
+                    Join Waitlist for Early Access
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Features -->
+    <section id="features" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#20175e] mb-4">Built for Student Freelancers</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Everything you need to succeed as a student
+                    freelancer</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-50 p-6 rounded-xl feature-card transition shadow-md card-hover">
+                    <div class="flex items-start">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-4 feature-icon">
+                                <i class="fas fa-user-tie text-xl text-[#6bc3eb]"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-bold text-[#20175e] mb-2">Dual Role Accounts</h3>
+                            <p class="text-gray-600">Hire and freelance from the same account. Perfect for student teams
+                                collaborating on projects.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-gray-50 p-6 rounded-xl feature-card transition shadow-md card-hover">
+                    <div class="flex items-start">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-4 feature-icon">
+                                <i class="fas fa-robot text-xl text-[#6bc3eb]"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-[#20175e] mb-2">AI-Powered Matching</h3>
+                            <p class="text-gray-600">Smart recommendations for talent + projects based on your skills
+                                and academic background.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-gray-50 p-6 rounded-xl feature-card transition shadow-md card-hover">
+                    <div class="flex items-start">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-4 feature-icon">
+                                <i class="fas fa-university text-xl text-[#6bc3eb]"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-[#20175e] mb-2">University Verified</h3>
+                            <p class="text-gray-600">Verify your student status to build trust. Partnered with top
+                                universities for credibility.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-gray-50 p-6 rounded-xl feature-card transition shadow-md card-hover">
+                    <div class="flex items-start">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-4 feature-icon">
+                                <i class="fas fa-coins text-xl text-[#6bc3eb]"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-[#20175e] mb-2">6-8% Commission Only</h3>
+                            <p class="text-gray-600">Keep more of your earnings compared to traditional platforms
+                                (15-20% fees).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-gray-50 p-6 rounded-xl feature-card transition shadow-md card-hover">
+                    <div class="flex items-start">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-4 feature-icon">
+                                <i class="fas fa-graduation-cap text-xl text-[#6bc3eb]"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-[#20175e] mb-2">Career Pipeline</h3>
+                            <p class="text-gray-600">Turn freelance gigs into full-time job offers with our employer
+                                network.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="bg-gray-50 p-6 rounded-xl feature-card transition shadow-md card-hover">
+                    <div class="flex items-start">
+                        <div>
+                            <div
+                                class="w-12 h-12 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-4 feature-icon">
+                                <i class="fas fa-shield-alt text-xl text-[#6bc3eb]"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-[#20175e] mb-2">Dispute Resolution</h3>
+                            <p class="text-gray-600">Smart contract-powered mediation ensures fair outcomes for
+                                students.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Freelancing Reimagined -->
+    <section class="py-16 bg-gradient-to-b from-white to-blue-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 relative">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                        alt="Diverse team working together"
+                        class="w-full max-w-lg mx-auto rounded-xl shadow-xl floating">
+                    <div class="absolute -bottom-5 -right-5 bg-white p-4 rounded-xl shadow-lg hidden md:block">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-users text-blue-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-blue-900">1200+</p>
+                                <p class="text-sm text-gray-500">Users in waitlist</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <span
+                        class="inline-block bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                        <i class="fas fa-bolt mr-1"></i> New Platform
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
+                        Freelancing, <span class="text-[#6bc3eb]">Reimagined</span> for All
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        PeerHire prioritizes student freelancers — but it's built for everyone. Whether you're a startup
+                        hiring fresh talent, a recent grad building a portfolio, or a pro looking for flexible gigs —
+                        you belong here.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                        <div
+                            class="highlight-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-graduation-cap text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Students</h4>
+                                <p class="text-sm text-gray-500">Build your portfolio</p>
+                            </div>
+                        </div>
+                        <div
+                            class="highlight-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-user-tie text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Professionals</h4>
+                                <p class="text-sm text-gray-500">Find flexible work</p>
+                            </div>
+                        </div>
+                        <div
+                            class="highlight-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-rocket text-green-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Startups</h4>
+                                <p class="text-sm text-gray-500">Hire top talent</p>
+                            </div>
+                        </div>
+                        <div
+                            class="highlight-card bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-lightbulb text-yellow-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Graduates</h4>
+                                <p class="text-sm text-gray-500">Launch your career</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                        class="bg-[#6bc3eb] hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        Join Our Community <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gradient-to-b from-white to-[#f0f9ff]">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#20175e] mb-4">Trusted by Student Freelancers</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Hear from students who've transformed their careers
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-12 h-12 rounded-full mr-4"
+                            alt="User">
+                        <div>
+                            <h4 class="font-bold text-[#20175e]">Priya M.</h4>
+                            <p class="text-sm text-gray-600">Computer Science Student</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"PeerHire helped me earn ₹25,000 in my first semester! The low fees
+                        mean I keep more of what I earn compared to other platforms."</p>
+                    <div class="flex">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full mr-4"
+                            alt="User">
+                        <div>
+                            <h4 class="font-bold text-[#20175e]">Rahul S.</h4>
+                            <p class="text-sm text-gray-600">Engineering Student</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"The blockchain escrow gave me confidence I'd get paid. I landed a
+                        freelance gig that turned into a full-time internship!"</p>
+                    <div class="flex">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover transition">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-12 h-12 rounded-full mr-4"
+                            alt="User">
+                        <div>
+                            <h4 class="font-bold text-[#20175e]">Ananya P.</h4>
+                            <p class="text-sm text-gray-600">Design Student</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"As a design student, PeerHire's university verification helped
+                        clients trust me. I've built an amazing portfolio while studying."</p>
+                    <div class="flex">
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star text-yellow-400 mr-1"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-[#20175e] mb-4">Transparent Pricing</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Fair pricing for every stage of your career</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Student Tier -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#6bc3eb] card-hover transition">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold text-[#20175e] mb-2">🎓 Student Tier</h3>
+                        <p class="text-gray-600">Verified Students</p>
+                    </div>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-[#6bc3eb]">6-8%</span>
+                        <span class="text-gray-600">Platform Fee</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>Full platform access</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>AI matching</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>Portfolio builder</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>Basic analytics</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>University verification</span>
+                        </li>
+                    </ul>
+                    <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                        class="w-full bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white py-3 rounded-lg font-medium transition">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Professional Tier -->
+                <div
+                    class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#20175e] card-hover transition transform scale-105">
+                    <div class="text-center mb-6">
+                        <div
+                            class="absolute top-0 right-0 bg-[#20175e] text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
+                            POPULAR</div>
+                        <h3 class="text-xl font-bold text-[#20175e] mb-2">👤 Professional Tier</h3>
+                        <p class="text-gray-600">Graduates & Alumni</p>
+                    </div>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-[#20175e]">10-12%</span>
+                        <span class="text-gray-600">Platform Fee</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#20175e] mr-2"></i>
+                            <span>All Student features</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#20175e] mr-2"></i>
+                            <span>Advanced analytics</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#20175e] mr-2"></i>
+                            <span>Enterprise gigs</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#20175e] mr-2"></i>
+                            <span>Priority support</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#20175e] mr-2"></i>
+                            <span>Verified alumni badge</span>
+                        </li>
+                    </ul>
+                    <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                        class="w-full bg-[#20175e] hover:bg-[#0e0a3a] text-white py-3 rounded-lg font-medium transition">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Recruiter Tier -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-[#6bc3eb] card-hover transition">
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold text-[#20175e] mb-2">🏢 Recruiter Tier</h3>
+                        <p class="text-gray-600">Startups & Companies</p>
+                    </div>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-[#6bc3eb]">5-15%</span>
+                        <span class="text-gray-600">Placement Fee</span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>Access to student talent</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>Team hiring</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>Detailed reviews</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>University partnerships</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-[#6bc3eb] mr-2"></i>
+                            <span>Dedicated manager</span>
+                        </li>
+                    </ul>
+                    <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                        class="w-full bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white py-3 rounded-lg font-medium transition">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frequently Asked Questions -->
+    <section id="faq" class="relative py-28 px-6 min-h-screen bg-gradient-to-b from-white to-[#f0f9ff]">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-12">
+
+            <!-- Sticky Heading -->
+            <div class="md:w-1/3">
+                <h2 class="text-4xl font-extrabold mb-6 sticky top-24 text-[#20175e]">
+                    Frequently Asked Questions
+                </h2>
+            </div>
+
+            <!-- FAQ List -->
+            <div class="md:w-2/3 space-y-6" id="faqList">
+
+                <div class="border-b border-[#20175e] pb-4">
+                    <button
+                        class="faq-toggle w-full flex justify-between items-center text-start text-xl py-4 font-medium hover:text-[#6bc3eb] transition-all">
+                        <span class="text-[#20175e]">How is PeerHire different from traditional freelance
+                            platforms?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#6bc3eb] mt-2 text-xl">
+                            PeerHire uses blockchain-backed smart contracts, a no-connects system, student-first
+                            pricing, and AI-matching to deliver faster, safer and fairer gigs for everyone.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-b border-[#20175e] pb-4">
+                    <button
+                        class="faq-toggle w-full flex justify-between items-center text-start text-xl py-4 font-medium hover:text-[#6bc3eb] transition-all">
+                        <span class="text-[#20175e]">Is PeerHire only for students?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#6bc3eb] mt-2 text-xl">
+                            We're student-first, not student-only. PeerHire is designed to empower students with
+                            real-world gigs, but we also welcome graduates and early professionals who want flexible,
+                            skill-based work. Think of it as a launchpad that grows with your career.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-b border-[#20175e] pb-4">
+                    <button
+                        class="faq-toggle w-full flex justify-between items-center text-start text-xl py-4 font-medium hover:text-[#6bc3eb] transition-all">
+                        <span class="text-[#20175e]">How does the blockchain system protect me as a freelancer or
+                            client?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#6bc3eb] mt-2 text-xl">
+                            Our blockchain-based smart contracts lock payments in escrow, track deliverables via
+                            milestones, and guarantee release only after verified completion—no ghosting, no scams, just
+                            pure trustless transactions.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-b border-[#20175e] pb-4">
+                    <button
+                        class="faq-toggle w-full flex justify-between items-center text-start text-xl py-4 font-medium hover:text-[#6bc3eb] transition-all">
+                        <span class="text-[#20175e]">Do I need crypto to use PeerHire?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#6bc3eb] mt-2 text-xl">
+                            Nope. We’ve wrapped the blockchain backend in a super-smooth UI. You can pay and get paid in
+                            INR or fiat; the smart contracts and wallet stuff run invisibly under the hood. It's Web3
+                            without the headaches.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-b border-[#20175e] pb-4">
+                    <button
+                        class="faq-toggle w-full flex justify-between items-center text-start text-xl py-4 font-medium hover:text-[#6bc3eb] transition-all">
+                        <span class="text-[#20175e]">How are freelancers matched to projects?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#6bc3eb] mt-2 text-xl">
+                            We use a hybrid model—you can bid on projects (without any "connects" nonsense), and when
+                            bidding closes, our AI steps in. It analyzes skill match, peer reviews, and past performance
+                            to shortlist top candidates. No more racing to bid first or losing to spammy profiles. Best
+                            fit wins, not fastest click.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-b border-[#20175e] pb-4">
+                    <button
+                        class="faq-toggle w-full flex justify-between items-center text-start text-xl py-4 font-medium hover:text-[#6bc3eb] transition-all">
+                        <span class="text-[#20175e]">What happens if there’s a dispute between a freelancer and
+                            client?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#6bc3eb] mt-2 text-xl">
+                            Our smart contracts lock project funds in escrow, so no one gets ghosted. If a dispute
+                            arises, we activate our Decentralized Dispute Resolution system, where verified student
+                            arbitrators and community validators step in to review the case transparently. It’s peer
+                            justice—minus the drama, lawyers, or bias.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="border-b border-[#20175e] pb-4">
+                    <button
+                        class="faq-toggle w-full flex justify-between items-center text-start text-xl py-4 font-medium hover:text-[#6bc3eb] transition-all">
+                        <span class="text-[#20175e]">Is PeerHire free to use?</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                    <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 ease-in-out">
+                        <p class="text-[#6bc3eb] mt-2 text-xl">
+                            Totally free for students to sign up, browse, and apply. We only charge a tiny fee (much
+                            lower than Upwork or Fiverr) after a project is successfully completed. No upfront fees, no
+                            pay-to-play.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="py-16 gradient-bg text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to transform your freelance journey?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Be part of the PeerHire community shaping the future of work.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                    class="bg-white text-[#6bc3eb] hover:bg-opacity-90 px-8 py-3 rounded-full font-medium transition shadow-lg">
+                    Join the Waitlist
+                </button>
+                <button onclick="window.location.href='mailto:peerhireofficial@gmail.com'"
+                    class="border-2 border-white text-white hover:bg-white hover:text-[#6bc3eb] px-8 py-3 rounded-full font-medium transition">
+                    Contact Us
+                </button>
+            </div>
+            <p class="mt-6 text-sm opacity-80">Want to partner with us? Email peerhireofficial@gmail.com</p>
+        </div>
+    </section>
+
+    <!-- University Partners -->
+    <section class="py-12 bg-gradient-to-b from-white to-[#f0f9ff]">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-8">
+                <h3 class="text-xl font-bold text-[#20175e] mb-2">Trusted by Universities</h3>
+                <p class="text-gray-600">Partnered with leading educational institutions</p>
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-70">
+                <div class="text-2xl font-bold text-[#20175e]">IIT</div>
+                <div class="text-2xl font-bold text-[#20175e]">NIT</div>
+                <div class="text-2xl font-bold text-[#20175e]">DU</div>
+                <div class="text-2xl font-bold text-[#20175e]">BITS</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#20175e] text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <!-- Adjusted container for logo -->
+                        <div class="h-16 w-auto flex items-center bg-white p-2 rounded-lg">
+                            <img src="./images/logo.png" alt="PeerHire Logo" class="h-full object-contain">
+                        </div>
+                    </div>
+
+                    <p class="mb-4 opacity-80">PeerHire Technologies Private Limited</p>
+                    <p class="mb-2 opacity-80"><i class="fas fa-envelope mr-2"></i>peerhireofficial@gmail.com</p>
+                    <p class="opacity-80"><i class="fas fa-phone mr-2"></i>+91 7501288493</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#about"
+                                class="opacity-80 hover:opacity-100 hover:text-[#6bc3eb] transition">About</a>
+                        </li>
+                        <li><a href="#faq" class="opacity-80 hover:opacity-100 hover:text-[#6bc3eb] transition">FAQ</a>
+                        </li>
+                        <li><a href="#" class="opacity-80 hover:opacity-100 hover:text-[#6bc3eb] transition">Terms</a>
+                        </li>
+                        <li><a href="#" class="opacity-80 hover:opacity-100 hover:text-[#6bc3eb] transition">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Follow Us -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/company/peerhire" target="_blank"
+                            class="w-10 h-10 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.instagram.com/peerhire_official" target="_blank"
+                            class="w-10 h-10 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/people/Peerhire/100095520699756/" target="_blank"
+                            class="w-10 h-10 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://x.com/Peer_Hire" target="_blank"
+                            class="w-10 h-10 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center hover:bg-opacity-30 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-[#6bc3eb] border-opacity-20 mt-8 pt-8 text-center opacity-70 text-sm">
+                <p>© 2025 PeerHire. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple dark mode toggle
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // Modal functionality
+            const modal = document.getElementById('processModal');
+            const btn = document.getElementById('showProcessBtn');
+            const span = document.getElementsByClassName('close-modal')[0];
+
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.faq-toggle').forEach((btn, idx) => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('svg');
+                const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+                document.querySelectorAll('.faq-content').forEach(el => el.style.maxHeight = '0px');
+                document.querySelectorAll('.faq-toggle svg').forEach(icon => icon.classList.remove('icon-rotate'));
+
+                if (!isOpen) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.classList.add('icon-rotate');
+                }
+            });
+        });
+
+        function toggleSidebar() {
+    const sidebar = document.getElementById('mobileSidebar');
+    sidebar.classList.toggle('-translate-x-full');
+  }
+    </script>
+    <script>
+        // Simple animation for the join button on hover
+        document.querySelector('button').addEventListener('mouseenter', function () {
+            this.querySelector('i').classList.add('fa-bounce');
+        });
+        document.querySelector('button').addEventListener('mouseleave', function () {
+            this.querySelector('i').classList.remove('fa-bounce');
+        });
+    </script>
+</body>
+
+</html>
