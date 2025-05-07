@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://peerhire.in/sitemap.xml
