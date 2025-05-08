@@ -4,9 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon for most browsers -->
+    <link rel="icon" href="/favicon.png" type="image/png">
+
+    <!-- Favicon for Safari/Apple -->
+    <link rel="apple-touch-icon" href="/favicon.png">
+
+    <!-- Web App Manifest (for Android/Google) -->
     <link rel="manifest" href="/manifest.json">
+
     <title>PeerHire | Connecting the Next Generation of Skilled Freelancers</title>
-    <meta name="description" content="PeerHire is a blockchain-powered freelance marketplace connecting student talent with global opportunities. Secure payments, verified skills, and AI-driven matching — hire smart, work smarter.">
+    <meta name="description"
+        content="PeerHire is a blockchain-powered freelance marketplace connecting student talent with global opportunities. Secure payments, verified skills, and AI-driven matching — hire smart, work smarter.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -312,59 +321,60 @@
     </div>
 
     <!-- Navigation -->
-<nav class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center">
-        <div class="h-10 w-auto flex items-center justify-center mr-2">
-          <img src="./images/logo.png" alt="PeerHire Logo" class="h-full object-contain">
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="h-10 w-auto flex items-center justify-center mr-2">
+                    <img src="./images/logo.png" alt="PeerHire Logo" class="h-full object-contain">
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#how-it-works" class="text-gray-600 hover:text-[#6bc3eb] transition">How It Works</a>
+                <a href="#features" class="text-gray-600 hover:text-[#6bc3eb] transition">Features</a>
+                <a href="#pricing" class="text-gray-600 hover:text-[#6bc3eb] transition">Pricing</a>
+                <a href="#faq" class="text-gray-600 hover:text-[#6bc3eb] transition">FAQs</a>
+                <a href="#about" class="text-gray-600 hover:text-[#6bc3eb] transition">About</a>
+            </div>
+
+            <!-- CTA Button -->
+            <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-4 py-2 rounded-full font-medium transition md:block hidden pulse">
+                Join Waitlist
+            </button>
+
+            <!-- Hamburger Icon -->
+            <button onclick="toggleSidebar()" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
         </div>
-      </div>
-  
-      <!-- Desktop Nav -->
-      <div class="hidden md:flex space-x-8">
-        <a href="#how-it-works" class="text-gray-600 hover:text-[#6bc3eb] transition">How It Works</a>
-        <a href="#features" class="text-gray-600 hover:text-[#6bc3eb] transition">Features</a>
-        <a href="#pricing" class="text-gray-600 hover:text-[#6bc3eb] transition">Pricing</a>
-        <a href="#faq" class="text-gray-600 hover:text-[#6bc3eb] transition">FAQs</a>
-        <a href="#about" class="text-gray-600 hover:text-[#6bc3eb] transition">About</a>
-      </div>
-  
-      <!-- CTA Button -->
-      <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
-        class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-4 py-2 rounded-full font-medium transition md:block hidden pulse">
-        Join Waitlist
-      </button>
-  
-      <!-- Hamburger Icon -->
-      <button onclick="toggleSidebar()" class="md:hidden text-gray-600 focus:outline-none">
-        <i class="fas fa-bars text-xl"></i>
-      </button>
-    </div>
-  </nav>
-  
-  <!-- Mobile Sidebar -->
-  <div id="mobileSidebar"
-    class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
-    <div class="flex items-center justify-between p-4 border-b">
-      <div class="h-8">
-        <img src="./images/logo.png" alt="PeerHire Logo" class="h-full object-contain">
-      </div>
-      <button onclick="toggleSidebar()" class="text-gray-600 focus:outline-none">
-        <i class="fas fa-times text-xl"></i>
-      </button>
-    </div>
-    <nav class="flex flex-col p-4 space-y-4">
-      <a href="#how-it-works" class="text-gray-700 hover:text-[#6bc3eb] transition">How It Works</a>
-      <a href="#features" class="text-gray-700 hover:text-[#6bc3eb] transition">Features</a>
-      <a href="#pricing" class="text-gray-700 hover:text-[#6bc3eb] transition">Pricing</a>
-      <a href="#faq" class="text-gray-700 hover:text-[#6bc3eb] transition">FAQs</a>
-      <a href="#about" class="text-gray-700 hover:text-[#6bc3eb] transition">About</a>
-      <a href="https://forms.gle/GbUevjkokZFDpa4t5" class="mt-4 bg-[#6bc3eb] text-white text-center py-2 rounded-full font-medium hover:bg-[#4fa8d4] transition">
-        Join Waitlist
-      </a>
     </nav>
-  </div>
-  
+
+    <!-- Mobile Sidebar -->
+    <div id="mobileSidebar"
+        class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden">
+        <div class="flex items-center justify-between p-4 border-b">
+            <div class="h-8">
+                <img src="./images/logo.png" alt="PeerHire Logo" class="h-full object-contain">
+            </div>
+            <button onclick="toggleSidebar()" class="text-gray-600 focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col p-4 space-y-4">
+            <a href="#how-it-works" class="text-gray-700 hover:text-[#6bc3eb] transition">How It Works</a>
+            <a href="#features" class="text-gray-700 hover:text-[#6bc3eb] transition">Features</a>
+            <a href="#pricing" class="text-gray-700 hover:text-[#6bc3eb] transition">Pricing</a>
+            <a href="#faq" class="text-gray-700 hover:text-[#6bc3eb] transition">FAQs</a>
+            <a href="#about" class="text-gray-700 hover:text-[#6bc3eb] transition">About</a>
+            <a href="https://forms.gle/GbUevjkokZFDpa4t5"
+                class="mt-4 bg-[#6bc3eb] text-white text-center py-2 rounded-full font-medium hover:bg-[#4fa8d4] transition">
+                Join Waitlist
+            </a>
+        </nav>
+    </div>
+
 
     <!-- Hero Section -->
     <section id="about" class="py-16 md:py-24 bg-gradient-to-r from-[#f8fcff] to-[#e6f4ff] relative overflow-hidden">
@@ -381,7 +391,8 @@
                     <span class="text-gradient">Generation Of Skilled Freelancers.</span>
                 </h1>
                 <p class="text-xl text-gray-600 mb-8">
-                    AI-powered matching. Blockchain-secured payments. An affordable, trust-first community that empowers student talent to thrive. The future of
+                    AI-powered matching. Blockchain-secured payments. An affordable, trust-first community that empowers
+                    student talent to thrive. The future of
                     freelancing is here.
                 </p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
@@ -741,7 +752,8 @@
             </div>
 
             <div class="mt-8 text-center">
-                <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')" class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-8 py-3 rounded-lg font-medium transition">
+                <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
+                    class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-8 py-3 rounded-lg font-medium transition">
                     Join Waitlist for Early Access
                 </button>
             </div>
@@ -1305,35 +1317,38 @@
     <!-- Meet the Founders -->
     <section id="founder" class="bg-white py-16">
         <div class="container mx-auto px-4 text-center">
-          <h2 class="text-3xl md:text-4xl font-bold text-[#20175e] mb-6">Meet the Founders</h2>
-          <p class="text-gray-600 max-w-2xl mx-auto mb-12">
-            The minds behind PeerHire are builders first. Driven by purpose, bonded by vision.
-          </p>
-      
-          <div class="flex flex-col md:flex-row items-center justify-center gap-12">
-            <!-- Founder 1 -->
-            <div class="text-center">
-              <img src="./images/sumit.png" alt="Sumit Nirmal" class="w-40 h-40 object-cover rounded-full mx-auto shadow-md mb-4">
-              <h3 class="text-xl font-semibold text-gray-800">Sumit Nirmal</h3>
-              <p class="text-sm text-gray-500">Co-Founder & CEO</p>
-              <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                Tech architect and blockchain brain. Builds systems, raises capital, and codes visions into reality.
-              </p>
+            <h2 class="text-3xl md:text-4xl font-bold text-[#20175e] mb-6">Meet the Founders</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-12">
+                The minds behind PeerHire are builders first. Driven by purpose, bonded by vision.
+            </p>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+                <!-- Founder 1 -->
+                <div class="text-center">
+                    <img src="./images/sumit.png" alt="Sumit Nirmal"
+                        class="w-40 h-40 object-cover rounded-full mx-auto shadow-md mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Sumit Nirmal</h3>
+                    <p class="text-sm text-gray-500">Co-Founder & CEO</p>
+                    <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
+                        Tech architect and blockchain brain. Builds systems, raises capital, and codes visions into
+                        reality.
+                    </p>
+                </div>
+
+                <!-- Founder 2 -->
+                <div class="text-center">
+                    <img src="./images/chanchal.jpg" alt="Chanchal Kuntal"
+                        class="w-40 h-40 object-cover rounded-full mx-auto shadow-md mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Chanchal Kuntal</h3>
+                    <p class="text-sm text-gray-500">Co-Founder & COO</p>
+                    <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
+                        Ops guru and product czar. Builds teams, streamlines processes, and makes the chaos look easy.
+                    </p>
+                </div>
             </div>
-      
-            <!-- Founder 2 -->
-            <div class="text-center">
-              <img src="./images/chanchal.jpg" alt="Chanchal Kuntal" class="w-40 h-40 object-cover rounded-full mx-auto shadow-md mb-4">
-              <h3 class="text-xl font-semibold text-gray-800">Chanchal Kuntal</h3>
-              <p class="text-sm text-gray-500">Co-Founder & COO</p>
-              <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                Ops guru and product czar. Builds teams, streamlines processes, and makes the chaos look easy.
-              </p>
-            </div>
-          </div>
         </div>
-      </section>
-      
+    </section>
+
 
     <!-- Final CTA -->
     <section class="py-16 gradient-bg text-white">
@@ -1477,9 +1492,9 @@
         });
 
         function toggleSidebar() {
-    const sidebar = document.getElementById('mobileSidebar');
-    sidebar.classList.toggle('-translate-x-full');
-  }
+            const sidebar = document.getElementById('mobileSidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
     </script>
     <script>
         // Simple animation for the join button on hover
