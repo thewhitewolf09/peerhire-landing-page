@@ -96,7 +96,7 @@
             overflow: hidden;
             border-right: .15em solid #6bc3eb;
             white-space: nowrap;
-            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+            animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
         }
 
         @keyframes typing {
@@ -377,25 +377,25 @@
 
 
     <!-- Hero Section -->
-    <section id="about" class="py-16 md:py-24 bg-gradient-to-r from-[#f8fcff] to-[#e6f4ff] relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-64 h-64 rounded-full bg-[#6bc3eb] opacity-10 -mr-32 -mt-32"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#20175e] opacity-10 -ml-64 -mb-64"></div>
+    <!-- Issue fixed for small and medium devices -->
+    <section id="about" class="py-12 sm:py-16 md:py-24 bg-gradient-to-r from-[#f8fcff] to-[#e6f4ff] relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-[#6bc3eb] opacity-10 -mr-16 sm:-mr-32 -mt-16 sm:-mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-[#20175e] opacity-10 -ml-32 sm:-ml-64 -mb-32 sm:-mb-64"></div>
 
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0 relative z-10">
+            <div class="md:w-3/5 w-full mb-10 relative z-10 text-center md:text-left">
                 <div class="inline-block px-4 py-2 bg-[#6bc3eb] bg-opacity-20 rounded-full text-[#20175e] mb-4">
                     <span class="font-medium">🚀 Student Freelancing Revolution</span>
                 </div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-[#20175e] mb-4 leading-tight">
-                    <span class="typing-animation">Connecting The Next</span><br>
-                    <span class="text-gradient">Generation Of Skilled Freelancers.</span>
+                <h1 class="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#20175e] mb-4 leading-tight">
+                    <span class="typing-animation inline-block">Connecting The Next</span>
+                    <span class="text-gradient block">Generation Of Skilled Freelancers.</span>
                 </h1>
-                <p class="text-xl text-gray-600 mb-8">
+                <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8">
                     AI-powered matching. Blockchain-secured payments. An affordable, trust-first community that empowers
-                    student talent to thrive. The future of
-                    freelancing is here.
+                    student talent to thrive. The future of freelancing is here.
                 </p>
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center md:justify-start">
                     <button onclick="window.open('https://forms.gle/GbUevjkokZFDpa4t5', '_blank')"
                         class="bg-[#6bc3eb] hover:bg-[#4fa8d4] text-white px-6 py-3 rounded-full font-medium transition shadow-lg pulse">
                         Join the Waitlist
@@ -406,7 +406,7 @@
                     </button>
                 </div>
 
-                <div class="mt-8 flex items-center">
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
                     <div class="flex -space-x-2">
                         <img src="https://randomuser.me/api/portraits/women/44.jpg"
                             class="w-10 h-10 rounded-full border-2 border-white" alt="User">
@@ -415,10 +415,9 @@
                         <img src="https://randomuser.me/api/portraits/women/68.jpg"
                             class="w-10 h-10 rounded-full border-2 border-white" alt="User">
                     </div>
-                    <div class="ml-4">
-                        <p class="text-sm text-gray-600"><span class="font-bold text-[#20175e]">1,200+</span> students
-                            already joined</p>
-                        <div class="flex items-center">
+                    <div class="text-center sm:text-left">
+                        <p class="text-sm text-gray-600"><span class="font-bold text-[#20175e]">1,200+</span> students already joined</p>
+                        <div class="flex items-center justify-center sm:justify-start">
                             <i class="fas fa-star text-yellow-400 mr-1"></i>
                             <i class="fas fa-star text-yellow-400 mr-1"></i>
                             <i class="fas fa-star text-yellow-400 mr-1"></i>
@@ -429,13 +428,10 @@
                     </div>
                 </div>
             </div>
-            <div class="md:w-1/2 flex justify-center relative">
-                <div class="relative w-full max-w-lg">
-                    <div class="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-[#6bc3eb] opacity-20 animate-ping">
-                    </div>
-                    <div
-                        class="absolute -bottom-10 -right-10 w-32 h-32 rounded-full bg-[#20175e] opacity-20 animate-ping animation-delay-1000">
-                    </div>
+            <div class="md:w-2/5 w-full flex justify-center relative">
+                <div class="relative w-full max-w-sm sm:max-w-md md:max-w-lg">
+                    <div class="absolute -top-10 -left-10 w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-[#6bc3eb] opacity-20 animate-ping"></div>
+                    <div class="absolute -bottom-10 -right-10 w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-[#20175e] opacity-20 animate-ping animation-delay-1000"></div>
                     <div class="relative z-10 floating">
                         <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
                             <div class="bg-[#20175e] text-white p-4 flex items-center">
@@ -446,27 +442,26 @@
                             </div>
                             <div class="p-4">
                                 <div class="flex items-center mb-4">
-                                    <div
-                                        class="w-10 h-10 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-3">
+                                    <div class="w-10 h-10 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-3">
                                         <i class="fas fa-user-graduate text-[#6bc3eb]"></i>
                                     </div>
                                     <div>
-                                        <div class="font-medium text-[#20175e]">Welcome back, Sarah!</div>
+                                        <div class="font-medium text-[#20175e] text-sm sm:text-base">Welcome back, Sarah!</div>
                                         <div class="text-xs text-gray-500">Computer Science Student</div>
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-3 gap-2 mb-4">
                                     <div class="bg-[#6bc3eb] bg-opacity-10 p-2 rounded-lg text-center">
-                                        <div class="text-[#20175e] font-bold">5</div>
+                                        <div class="text-[#20175e] font-bold text-sm">5</div>
                                         <div class="text-xs text-gray-600">Active Gigs</div>
                                     </div>
                                     <div class="bg-[#6bc3eb] bg-opacity-10 p-2 rounded-lg text-center">
-                                        <div class="text-[#20175e] font-bold">$1,240</div>
+                                        <div class="text-[#20175e] font-bold text-sm">$1,240</div>
                                         <div class="text-xs text-gray-600">Earnings</div>
                                     </div>
                                     <div class="bg-[#6bc3eb] bg-opacity-10 p-2 rounded-lg text-center">
-                                        <div class="text-[#20175e] font-bold">4.9★</div>
+                                        <div class="text-[#20175e] font-bold text-sm">4.9★</div>
                                         <div class="text-xs text-gray-600">Rating</div>
                                     </div>
                                 </div>
@@ -478,35 +473,30 @@
                                     </div>
                                     <div class="space-y-2">
                                         <div class="flex items-center p-2 bg-[#f5f9ff] rounded-lg">
-                                            <div
-                                                class="w-8 h-8 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-2">
+                                            <div class="w-8 h-8 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-2">
                                                 <i class="fas fa-laptop-code text-xs text-[#6bc3eb]"></i>
                                             </div>
                                             <div class="flex-1">
                                                 <div class="text-sm font-medium text-[#20175e]">Web Dev</div>
                                                 <div class="text-xs text-gray-500">$250 - 2 weeks</div>
                                             </div>
-                                            <button
-                                                class="text-xs bg-[#6bc3eb] text-white px-2 py-1 rounded">Apply</button>
+                                            <button class="text-xs bg-[#6bc3eb] text-white px-2 py-1 rounded">Apply</button>
                                         </div>
                                         <div class="flex items-center p-2 bg-[#f5f9ff] rounded-lg">
-                                            <div
-                                                class="w-8 h-8 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-2">
+                                            <div class="w-8 h-8 rounded-full bg-[#6bc3eb] bg-opacity-20 flex items-center justify-center mr-2">
                                                 <i class="fas fa-mobile-alt text-xs text-[#6bc3eb]"></i>
                                             </div>
                                             <div class="flex-1">
                                                 <div class="text-sm font-medium text-[#20175e]">App Design</div>
                                                 <div class="text-xs text-gray-500">$180 - 10 days</div>
                                             </div>
-                                            <button
-                                                class="text-xs bg-[#6bc3eb] text-white px-2 py-1 rounded">Apply</button>
+                                            <button class="text-xs bg-[#6bc3eb] text-white px-2 py-1 rounded">Apply</button>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="text-center">
-                                    <div
-                                        class="inline-block bg-[#6bc3eb] bg-opacity-10 text-[#6bc3eb] text-xs px-3 py-1 rounded-full">
+                                    <div class="inline-block bg-[#6bc3eb] bg-opacity-10 text-[#6bc3eb] text-xs px-3 py-1 rounded-full">
                                         <i class="fas fa-bolt mr-1"></i> 3 more matches
                                     </div>
                                 </div>
