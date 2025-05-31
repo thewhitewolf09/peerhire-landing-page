@@ -203,8 +203,10 @@
                     <div class="pt-2">
                         <button type="submit" id="submitButton"
                             class="w-full gradient-bg text-white font-bold py-4 px-6 rounded-lg hover:opacity-90 transition-all flex items-center justify-center space-x-2">
-                            <span>Join the Waitlist</span>
-                            <i class="fas fa-arrow-right"></i>
+                            <span id="submitButtonText">Join the Waitlist</span>
+                            <div id="submitLoader"
+                                class="hidden animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5">
+                            </div>
                         </button>
 
                     </div>
@@ -374,123 +376,114 @@
 
 
 
-    <script>
-        const submitButton = document.getElementById('submitButton');
-        const joinAgainBtn = document.getElementById('joinAgainBtn');
-        let submitted = false;
+<script>
+    const submitButton = document.getElementById('submitButton');
+    const submitText = document.getElementById('submitButtonText');
+    const submitLoader = document.getElementById('submitLoader');
+    const joinAgainBtn = document.getElementById('joinAgainBtn');
+    let submitted = false;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const refCode = urlParams.get('ref');
-            if (refCode) {
-                document.getElementById('referrer').value = refCode;
-            }
-
-            if (localStorage.getItem('peerHireWaitlistJoined')) {
-                const waitlistPos = localStorage.getItem('peerHireWaitlistPosition');
-                document.getElementById('waitlistNumber').textContent = waitlistPos;
-                document.getElementById('waitlistForm').classList.add('hidden');
-                document.getElementById('successMessage').classList.remove('hidden');
-                const referralLink = localStorage.getItem('peerHireReferralLink');
-                if (referralLink) updateReferralLink(referralLink);
-            }
-        });
-
-        document.getElementById('waitlistForm').addEventListener('submit', function () {
-            submitted = true;
-            submitButton.disabled = true;
-            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
-        });
-
-        document.getElementById('hidden_iframe').addEventListener('load', function () {
-            if (submitted) {
-                const email = document.getElementById('email').value;
-
-                fetch(`https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec?email=${encodeURIComponent(email)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Check if the user already exists
-                        if (data.status === 'exists' || data.refCode) {
-                            const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
-                            const waitlistPos = localStorage.getItem('peerHireWaitlistPosition') || Math.floor(Math.random() * 500) + 1;
-
-                            updateReferralLink(referralLink);
-                            document.getElementById('waitlistNumber').textContent = waitlistPos;
-                            document.getElementById('waitlistForm').classList.add('hidden');
-                            document.getElementById('successMessage').classList.remove('hidden');
-
-                            localStorage.setItem('peerHireWaitlistJoined', 'true');
-                            localStorage.setItem('peerHireWaitlistPosition', waitlistPos);
-                            localStorage.setItem('peerHireReferralLink', referralLink);
-
-                            // Change text for existing user
-                            document.querySelector('#successMessage h3').textContent = 'Already signed up 🙌';
-                            document.querySelector('#successMessage p').textContent = 'You’re already on the waitlist. Share your referral link to move up!';
-
-                            // ✅ Hide the waitlist number line
-                            document.getElementById('waitlistPositionText').classList.add('hidden');
-
-                            submitted = false;
-                            return;
-                        }
-
-                        // Otherwise proceed as a new user
-                        const referralLink = `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
-                        updateReferralLink(referralLink);
-
-                        fetch('https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec')
-                            .then(resp => resp.json())
-                            .then(countData => {
-                                const waitlistPos = countData.count || Math.floor(Math.random() * 500) + 1;
-                                document.getElementById('waitlistNumber').textContent = waitlistPos;
-                                document.getElementById('waitlistForm').classList.add('hidden');
-                                document.getElementById('successMessage').classList.remove('hidden');
-                                localStorage.setItem('peerHireWaitlistJoined', 'true');
-                                localStorage.setItem('peerHireWaitlistPosition', waitlistPos);
-                                localStorage.setItem('peerHireReferralLink', referralLink);
-                                submitted = false;
-                            });
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        const fallbackPos = Math.floor(Math.random() * 500) + 1;
-                        document.getElementById('waitlistNumber').textContent = fallbackPos;
-                        document.getElementById('waitlistForm').classList.add('hidden');
-                        document.getElementById('successMessage').classList.remove('hidden');
-                        localStorage.setItem('peerHireWaitlistJoined', 'true');
-                        localStorage.setItem('peerHireWaitlistPosition', fallbackPos);
-                        submitted = false;
-                    });
-            }
-
-        });
-
-        joinAgainBtn.addEventListener('click', () => {
-            localStorage.removeItem('peerHireWaitlistJoined');
-            localStorage.removeItem('peerHireWaitlistPosition');
-            localStorage.removeItem('peerHireReferralLink');
-            document.getElementById('successMessage').classList.add('hidden');
-            document.getElementById('waitlistForm').classList.remove('hidden');
-            document.getElementById('waitlistForm').reset();
-            submitButton.disabled = false;
-            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
-        });
-
-        function updateReferralLink(referralURL) {
-            document.getElementById("referralLink").value = referralURL;
-            document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=Just%20joined%20@Peer_Hire%20early%20waitlist!%20Join%20using%20my%20link%20and%20get%20ahead:%20${encodeURIComponent(referralURL)}`;
-            document.getElementById("shareLinkedIn").href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralURL)}`;
-            document.getElementById("shareWhatsApp").href = `https://api.whatsapp.com/send?text=Hey!%20Check%20out%20PeerHire%20for%20freelance%20gigs%20and%20opportunities.%20Use%20my%20link%20to%20sign%20up:%20${encodeURIComponent(referralURL)}`;
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref');
+        if (refCode) {
+            document.getElementById('referrer').value = refCode;
         }
 
-        function copyReferral() {
-            const link = document.getElementById("referralLink");
-            link.select();
-            link.setSelectionRange(0, 99999);
-            document.execCommand("copy");
-            alert("Referral link copied!");
+        if (localStorage.getItem('peerHireWaitlistJoined')) {
+            const waitlistPos = localStorage.getItem('peerHireWaitlistPosition');
+            document.getElementById('waitlistNumber').textContent = waitlistPos;
+            document.getElementById('waitlistForm').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('hidden');
+            const referralLink = localStorage.getItem('peerHireReferralLink');
+            if (referralLink) updateReferralLink(referralLink);
         }
-    </script>
+    });
+
+    document.getElementById('waitlistForm').addEventListener('submit', function () {
+        submitted = true;
+
+        // Show spinner
+        submitText.classList.add('hidden');
+        submitLoader.classList.remove('hidden');
+    });
+
+    document.getElementById('hidden_iframe').addEventListener('load', function () {
+        if (submitted) {
+            const email = document.getElementById('email').value;
+
+            fetch(`https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec?email=${encodeURIComponent(email)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const isExisting = data.status === 'exists' || data.refCode;
+
+                    const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
+                    const waitlistPos = localStorage.getItem('peerHireWaitlistPosition') || Math.floor(Math.random() * 500) + 1;
+
+                    updateReferralLink(referralLink);
+                    document.getElementById('waitlistNumber').textContent = waitlistPos;
+                    document.getElementById('waitlistForm').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
+
+                    localStorage.setItem('peerHireWaitlistJoined', 'true');
+                    localStorage.setItem('peerHireWaitlistPosition', waitlistPos);
+                    localStorage.setItem('peerHireReferralLink', referralLink);
+
+                    if (isExisting) {
+                        document.querySelector('#successMessage h3').textContent = 'Already signed up 🙌';
+                        document.querySelector('#successMessage p').textContent = 'You’re already on the waitlist. Share your referral link to move up!';
+                        document.getElementById('waitlistPositionText').classList.add('hidden');
+                    }
+
+                    // Reset submit UI
+                    submitted = false;
+                    submitText.classList.remove('hidden');
+                    submitLoader.classList.add('hidden');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const fallbackPos = Math.floor(Math.random() * 500) + 1;
+                    document.getElementById('waitlistNumber').textContent = fallbackPos;
+                    document.getElementById('waitlistForm').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
+                    localStorage.setItem('peerHireWaitlistJoined', 'true');
+                    localStorage.setItem('peerHireWaitlistPosition', fallbackPos);
+
+                    // Reset submit UI
+                    submitted = false;
+                    submitText.classList.remove('hidden');
+                    submitLoader.classList.add('hidden');
+                });
+        }
+    });
+
+    joinAgainBtn.addEventListener('click', () => {
+        localStorage.removeItem('peerHireWaitlistJoined');
+        localStorage.removeItem('peerHireWaitlistPosition');
+        localStorage.removeItem('peerHireReferralLink');
+        document.getElementById('successMessage').classList.add('hidden');
+        document.getElementById('waitlistForm').classList.remove('hidden');
+        document.getElementById('waitlistForm').reset();
+
+        submitText.classList.remove('hidden');
+        submitLoader.classList.add('hidden');
+    });
+
+    function updateReferralLink(referralURL) {
+        document.getElementById("referralLink").value = referralURL;
+        document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=Just%20joined%20@Peer_Hire%20early%20waitlist!%20Join%20using%20my%20link%20and%20get%20ahead:%20${encodeURIComponent(referralURL)}`;
+        document.getElementById("shareLinkedIn").href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralURL)}`;
+        document.getElementById("shareWhatsApp").href = `https://api.whatsapp.com/send?text=Hey!%20Check%20out%20PeerHire%20for%20freelance%20gigs%20and%20opportunities.%20Use%20my%20link%20to%20sign%20up:%20${encodeURIComponent(referralURL)}`;
+    }
+
+    function copyReferral() {
+        const link = document.getElementById("referralLink");
+        link.select();
+        link.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+    }
+</script>
+
 
 
 
