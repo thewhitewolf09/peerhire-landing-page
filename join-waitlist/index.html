@@ -104,7 +104,7 @@
 
             <div class="p-8 md:p-12">
                 <form id="waitlistForm" class="space-y-6" method="POST"
-                    action="https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec"
+                    action="https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec"
                     target="hidden_iframe" onsubmit="submitted=true;">
                     <input type="text" name="website" id="website" style="display:none;">
                     <input type="hidden" id="referrer" name="referrer" />
@@ -334,7 +334,7 @@
     </div>
 
     <script>
-        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec";
+        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec";
 
         fetch(LEADERBOARD_API_URL)
             .then(res => res.json())
@@ -347,9 +347,9 @@
                     const row = `
                 <tr>
                   <td class="px-6 py-4 font-medium text-gray-900">${rankIcon}</td>
-                  <td class="px-6 py-4">${user.name}</td>
+                  <td class="px-6 py-4">${user.fullName}</td>
                   <td class="px-6 py-4">${user.college}</td>
-                  <td class="px-6 py-4 font-bold text-green-600">${user.referrals}</td>
+                  <td class="px-6 py-4 font-bold text-green-600">${user.referralCount}</td>
                 </tr>
               `;
                     tbody.insertAdjacentHTML('beforeend', row);
@@ -394,7 +394,7 @@
             if (submitted) {
                 const email = document.getElementById('email').value;
 
-                fetch(`https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec?email=${encodeURIComponent(email)}`)
+                fetch(`https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data && data.refCode) {
@@ -404,7 +404,7 @@
                         }
 
                         // Display success and store waitlist position
-                        fetch('https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec')
+                        fetch('https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec')
                             .then(resp => resp.json())
                             .then(countData => {
                                 const waitlistPos = countData.count || Math.floor(Math.random() * 500) + 1;
