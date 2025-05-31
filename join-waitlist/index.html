@@ -14,6 +14,8 @@
     <title>Join the Waitlist | PeerHire</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -64,6 +66,15 @@
                 transform: translateY(0px);
             }
         }
+
+        .fa.fa-twitter {
+            font-family: sans-serif;
+        }
+
+        .fa.fa-twitter::before {
+            content: "𝕏";
+            font-size: 1.2em;
+        }
     </style>
 </head>
 
@@ -93,7 +104,7 @@
 
             <div class="p-8 md:p-12">
                 <form id="waitlistForm" class="space-y-6" method="POST"
-                    action="https://script.google.com/macros/s/AKfycbwuC97PInsLd5Rohslw9ZWErGvBJeZBPK2OUP_EAHNYdsYk8m6rjJj9FmrZOyakcx9Z/exec"
+                    action="https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec"
                     target="hidden_iframe" onsubmit="submitted=true;">
                     <input type="text" name="website" id="website" style="display:none;">
                     <input type="hidden" id="referrer" name="referrer" />
@@ -232,7 +243,7 @@
                         <div class="flex justify-center gap-4">
                             <a href="#" target="_blank" id="shareTwitter"
                                 class="text-[#1DA1F2] hover:underline text-sm font-semibold"><i
-                                    class="fab fa-twitter mr-1"></i>Share on Twitter</a>
+                                    class="fa fa-twitter mr-1"></i>Share on X</a>
                             <a href="#" target="_blank" id="shareLinkedIn"
                                 class="text-[#0077B5] hover:underline text-sm font-semibold"><i
                                     class="fab fa-linkedin mr-1"></i>Share on LinkedIn</a>
@@ -241,6 +252,50 @@
                                     class="fab fa-whatsapp mr-1"></i>Share on WhatsApp</a>
                         </div>
                     </div>
+
+
+                    <!-- 👑 Leaderboard Section -->
+                    <div class="mt-12 bg-white rounded-xl p-6 md:p-8 shadow-md" id="leaderboard">
+                        <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">🏆 Referral Leaderboard</h3>
+                        <p class="text-sm text-center text-gray-600 mb-6">Top referrers will get early access, verified
+                            badges & exclusive swag 🎁</p>
+
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left text-gray-600">
+                                <thead class="text-xs text-gray-500 uppercase bg-[#F4F9F9]">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">Rank</th>
+                                        <th scope="col" class="px-6 py-3">Name</th>
+                                        <th scope="col" class="px-6 py-3">College / Role</th>
+                                        <th scope="col" class="px-6 py-3">Referrals</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leaderboardBody" class="bg-white divide-y divide-gray-200">
+                                    <!-- Dynamic rows go here -->
+                                    <tr>
+                                        <td class="px-6 py-4 font-medium text-gray-900">🥇 #1</td>
+                                        <td class="px-6 py-4">Aarav K.</td>
+                                        <td class="px-6 py-4">IIT Bombay / Student</td>
+                                        <td class="px-6 py-4 font-bold text-green-600">42</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4">🥈 #2</td>
+                                        <td class="px-6 py-4">Mehak R.</td>
+                                        <td class="px-6 py-4">BITS Goa / Recent Grad</td>
+                                        <td class="px-6 py-4 font-bold text-green-600">35</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4">🥉 #3</td>
+                                        <td class="px-6 py-4">Yash P.</td>
+                                        <td class="px-6 py-4">VIT / Early Pro</td>
+                                        <td class="px-6 py-4 font-bold text-green-600">30</td>
+                                    </tr>
+                                    <!-- More rows dynamically added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
 
 
                 </div>
@@ -279,17 +334,46 @@
     </div>
 
     <script>
+        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec";
+
+        fetch(LEADERBOARD_API_URL)
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('leaderboardBody');
+                tbody.innerHTML = '';
+
+                data.forEach((user, index) => {
+                    const rankIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
+                    const row = `
+                <tr>
+                  <td class="px-6 py-4 font-medium text-gray-900">${rankIcon}</td>
+                  <td class="px-6 py-4">${user.name}</td>
+                  <td class="px-6 py-4">${user.college}</td>
+                  <td class="px-6 py-4 font-bold text-green-600">${user.referrals}</td>
+                </tr>
+              `;
+                    tbody.insertAdjacentHTML('beforeend', row);
+                });
+            })
+            .catch(err => {
+                console.error("Error loading leaderboard:", err);
+                document.getElementById('leaderboard').style.display = 'none';
+            });
+    </script>
+
+
+    <script>
         const submitButton = document.getElementById('submitButton');
         const joinAgainBtn = document.getElementById('joinAgainBtn');
         let submitted = false;
-    
+
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const refCode = urlParams.get('ref');
             if (refCode) {
                 document.getElementById('referrer').value = refCode;
             }
-    
+
             if (localStorage.getItem('peerHireWaitlistJoined')) {
                 const waitlistPos = localStorage.getItem('peerHireWaitlistPosition');
                 document.getElementById('waitlistNumber').textContent = waitlistPos;
@@ -299,18 +383,18 @@
                 if (referralLink) updateReferralLink(referralLink);
             }
         });
-    
+
         document.getElementById('waitlistForm').addEventListener('submit', function () {
             submitted = true;
             submitButton.disabled = true;
             submitButton.classList.add('opacity-50', 'cursor-not-allowed');
         });
-    
+
         document.getElementById('hidden_iframe').addEventListener('load', function () {
             if (submitted) {
                 const email = document.getElementById('email').value;
-    
-                fetch(`https://script.google.com/macros/s/AKfycbwuC97PInsLd5Rohslw9ZWErGvBJeZBPK2OUP_EAHNYdsYk8m6rjJj9FmrZOyakcx9Z/exec?email=${encodeURIComponent(email)}`)
+
+                fetch(`https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data && data.refCode) {
@@ -318,9 +402,9 @@
                             localStorage.setItem('peerHireReferralLink', referralLink);
                             updateReferralLink(referralLink);
                         }
-    
+
                         // Display success and store waitlist position
-                        fetch('https://script.google.com/macros/s/AKfycbwuC97PInsLd5Rohslw9ZWErGvBJeZBPK2OUP_EAHNYdsYk8m6rjJj9FmrZOyakcx9Z/exec')
+                        fetch('https://script.google.com/macros/s/AKfycbxQ8DSFA6F4ikGMits8kBBWcYr_0tFnyKz8m3sV18USZK68jVGuN2tLpR6dkWZTrLib/exec')
                             .then(resp => resp.json())
                             .then(countData => {
                                 const waitlistPos = countData.count || Math.floor(Math.random() * 500) + 1;
@@ -344,7 +428,7 @@
                     });
             }
         });
-    
+
         joinAgainBtn.addEventListener('click', () => {
             localStorage.removeItem('peerHireWaitlistJoined');
             localStorage.removeItem('peerHireWaitlistPosition');
@@ -355,14 +439,14 @@
             submitButton.disabled = false;
             submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
         });
-    
+
         function updateReferralLink(referralURL) {
             document.getElementById("referralLink").value = referralURL;
-            document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=Just%20joined%20@PeerHireHQ%20early%20waitlist!%20Join%20using%20my%20link%20and%20get%20ahead:%20${encodeURIComponent(referralURL)}`;
+            document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=Just%20joined%20@Peer_Hire%20early%20waitlist!%20Join%20using%20my%20link%20and%20get%20ahead:%20${encodeURIComponent(referralURL)}`;
             document.getElementById("shareLinkedIn").href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referralURL)}`;
             document.getElementById("shareWhatsApp").href = `https://api.whatsapp.com/send?text=Hey!%20Check%20out%20PeerHire%20for%20freelance%20gigs%20and%20opportunities.%20Use%20my%20link%20to%20sign%20up:%20${encodeURIComponent(referralURL)}`;
         }
-    
+
         function copyReferral() {
             const link = document.getElementById("referralLink");
             link.select();
@@ -371,8 +455,8 @@
             alert("Referral link copied!");
         }
     </script>
-    
-    
+
+
 
     <script>
         // 🛡️ Basic Honeypot Anti-Bot Module
