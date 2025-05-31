@@ -104,7 +104,7 @@
 
             <div class="p-8 md:p-12">
                 <form id="waitlistForm" class="space-y-6" method="POST"
-                    action="https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec"
+                    action="https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec"
                     target="hidden_iframe" onsubmit="submitted=true;">
                     <input type="text" name="website" id="website" style="display:none;">
                     <input type="hidden" id="referrer" name="referrer" />
@@ -217,11 +217,14 @@
                     <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-check text-green-600 text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">You're on the list! 🎉</h3>
-                    <p class="text-gray-600 mb-4">We've added you to the PeerHire waitlist. Keep an eye on your inbox
-                        for updates.</p>
-                    <p class="text-lg font-semibold text-[#6bc3eb]">You're #<span id="waitlistNumber">42</span> on the
-                        waitlist!</p>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2" id="successHeading">You're on the list! 🎉</h3>
+                    <p class="text-gray-600 mb-4" id="successBody">We've added you to the PeerHire waitlist. Keep an eye
+                        on your inbox for updates.</p>
+
+                    <p class="text-lg font-semibold text-[#6bc3eb]" id="waitlistPositionText">
+                        You're #<span id="waitlistNumber">42</span> on the waitlist!
+                    </p>
+
                     <button id="joinAgainBtn"
                         class="mt-4 px-4 py-2  text-[#6bc3eb] font-semibold underline hover:text-[#20175e] transition-all">
                         Join with another email
@@ -255,46 +258,40 @@
 
 
                     <!-- 👑 Leaderboard Section -->
-                    <div class="mt-12 bg-white rounded-xl p-6 md:p-8 shadow-md" id="leaderboard">
-                        <h3 class="text-2xl font-bold text-center text-gray-800 mb-4">🏆 Referral Leaderboard</h3>
-                        <p class="text-sm text-center text-gray-600 mb-6">Top referrers will get early access, verified
-                            badges & exclusive swag 🎁</p>
+                    <div class="mt-12 bg-white rounded-xl p-4 sm:p-6 md:p-8 shadow-md" id="leaderboard">
+                        <h3 class="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-2 sm:mb-4">🏆 Referral
+                            Leaderboard</h3>
+                        <p class="text-xs sm:text-sm text-center text-gray-600 mb-4 sm:mb-6">
+                            Top referrers get early access, verified badges & exclusive swag 🎁
+                        </p>
 
-                        <div class="overflow-x-auto">
-                            <table class="min-w-full text-sm text-left text-gray-600">
+                        <!-- Loader -->
+                        <div id="leaderboardLoader" class="text-center py-6 text-gray-500">
+                            <div class="animate-spin inline-block w-6 h-6 border-4 border-current border-t-transparent text-blue-500 rounded-full"
+                                role="status" aria-label="loading"></div>
+                            <p class="mt-2 text-sm">Loading leaderboard...</p>
+                        </div>
+
+                        <!-- Table (hidden by default) -->
+                        <div class="w-full overflow-x-auto rounded-lg" id="leaderboardTableWrapper"
+                            style="display: none;">
+                            <table class="min-w-[500px] w-full text-sm text-left text-gray-600">
                                 <thead class="text-xs text-gray-500 uppercase bg-[#F4F9F9]">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3">Rank</th>
-                                        <th scope="col" class="px-6 py-3">Name</th>
-                                        <th scope="col" class="px-6 py-3">College / Role</th>
-                                        <th scope="col" class="px-6 py-3">Referrals</th>
+                                        <th scope="col" class="px-4 sm:px-6 py-3">Rank</th>
+                                        <th scope="col" class="px-4 sm:px-6 py-3">Name</th>
+                                        <th scope="col" class="px-4 sm:px-6 py-3">College / Role</th>
+                                        <th scope="col" class="px-4 sm:px-6 py-3">Referrals</th>
                                     </tr>
                                 </thead>
                                 <tbody id="leaderboardBody" class="bg-white divide-y divide-gray-200">
                                     <!-- Dynamic rows go here -->
-                                    <tr>
-                                        <td class="px-6 py-4 font-medium text-gray-900">🥇 #1</td>
-                                        <td class="px-6 py-4">Aarav K.</td>
-                                        <td class="px-6 py-4">IIT Bombay / Student</td>
-                                        <td class="px-6 py-4 font-bold text-green-600">42</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4">🥈 #2</td>
-                                        <td class="px-6 py-4">Mehak R.</td>
-                                        <td class="px-6 py-4">BITS Goa / Recent Grad</td>
-                                        <td class="px-6 py-4 font-bold text-green-600">35</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-6 py-4">🥉 #3</td>
-                                        <td class="px-6 py-4">Yash P.</td>
-                                        <td class="px-6 py-4">VIT / Early Pro</td>
-                                        <td class="px-6 py-4 font-bold text-green-600">30</td>
-                                    </tr>
-                                    <!-- More rows dynamically added here -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
+
 
 
 
@@ -334,32 +331,47 @@
     </div>
 
     <script>
-        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec";
+        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec?leaderboard=true";
+
+        const leaderboardSection = document.getElementById('leaderboard');
+        const leaderboardBody = document.getElementById('leaderboardBody');
+        const loader = document.getElementById('leaderboardLoader');
+        const tableWrapper = document.getElementById('leaderboardTableWrapper');
+
+        loader.style.display = 'block';     // Show loader
+        tableWrapper.style.display = 'none'; // Hide table initially
+        leaderboardBody.innerHTML = '';     // Clear any rows
 
         fetch(LEADERBOARD_API_URL)
             .then(res => res.json())
             .then(data => {
-                const tbody = document.getElementById('leaderboardBody');
-                tbody.innerHTML = '';
+                loader.style.display = 'none';      // Hide loader
+                tableWrapper.style.display = 'block'; // Show table
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    leaderboardBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-gray-500">No data yet. Be the first to refer! 🎯</td></tr>`;
+                    return;
+                }
 
                 data.forEach((user, index) => {
                     const rankIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
                     const row = `
                 <tr>
-                  <td class="px-6 py-4 font-medium text-gray-900">${rankIcon}</td>
-                  <td class="px-6 py-4">${user.fullName}</td>
-                  <td class="px-6 py-4">${user.college}</td>
-                  <td class="px-6 py-4 font-bold text-green-600">${user.referralCount}</td>
+                  <td class="px-4 sm:px-6 py-4 font-medium text-gray-900">${rankIcon}</td>
+                  <td class="px-4 sm:px-6 py-4">${user.fullName}</td>
+                  <td class="px-4 sm:px-6 py-4">${user.college || user.role}</td>
+                  <td class="px-4 sm:px-6 py-4 font-bold text-green-600">${user.referralCount || 0}</td>
                 </tr>
               `;
-                    tbody.insertAdjacentHTML('beforeend', row);
+                    leaderboardBody.insertAdjacentHTML('beforeend', row);
                 });
             })
             .catch(err => {
                 console.error("Error loading leaderboard:", err);
-                document.getElementById('leaderboard').style.display = 'none';
+                loader.innerHTML = `<p class="text-red-500 text-sm">Failed to load leaderboard. Please try again later.</p>`;
             });
     </script>
+
 
 
     <script>
@@ -394,17 +406,39 @@
             if (submitted) {
                 const email = document.getElementById('email').value;
 
-                fetch(`https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec?email=${encodeURIComponent(email)}`)
+                fetch(`https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
-                        if (data && data.refCode) {
-                            const referralLink = `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
-                            localStorage.setItem('peerHireReferralLink', referralLink);
+                        // Check if the user already exists
+                        if (data.status === 'exists' || data.refCode) {
+                            const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
+                            const waitlistPos = localStorage.getItem('peerHireWaitlistPosition') || Math.floor(Math.random() * 500) + 1;
+
                             updateReferralLink(referralLink);
+                            document.getElementById('waitlistNumber').textContent = waitlistPos;
+                            document.getElementById('waitlistForm').classList.add('hidden');
+                            document.getElementById('successMessage').classList.remove('hidden');
+
+                            localStorage.setItem('peerHireWaitlistJoined', 'true');
+                            localStorage.setItem('peerHireWaitlistPosition', waitlistPos);
+                            localStorage.setItem('peerHireReferralLink', referralLink);
+
+                            // Change text for existing user
+                            document.querySelector('#successMessage h3').textContent = 'Already signed up 🙌';
+                            document.querySelector('#successMessage p').textContent = 'You’re already on the waitlist. Share your referral link to move up!';
+
+                            // ✅ Hide the waitlist number line
+                            document.getElementById('waitlistPositionText').classList.add('hidden');
+
+                            submitted = false;
+                            return;
                         }
 
-                        // Display success and store waitlist position
-                        fetch('https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec')
+                        // Otherwise proceed as a new user
+                        const referralLink = `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
+                        updateReferralLink(referralLink);
+
+                        fetch('https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec')
                             .then(resp => resp.json())
                             .then(countData => {
                                 const waitlistPos = countData.count || Math.floor(Math.random() * 500) + 1;
@@ -413,11 +447,12 @@
                                 document.getElementById('successMessage').classList.remove('hidden');
                                 localStorage.setItem('peerHireWaitlistJoined', 'true');
                                 localStorage.setItem('peerHireWaitlistPosition', waitlistPos);
+                                localStorage.setItem('peerHireReferralLink', referralLink);
                                 submitted = false;
                             });
                     })
                     .catch(error => {
-                        console.error('Error fetching user referral info:', error);
+                        console.error('Error:', error);
                         const fallbackPos = Math.floor(Math.random() * 500) + 1;
                         document.getElementById('waitlistNumber').textContent = fallbackPos;
                         document.getElementById('waitlistForm').classList.add('hidden');
@@ -427,6 +462,7 @@
                         submitted = false;
                     });
             }
+
         });
 
         joinAgainBtn.addEventListener('click', () => {
