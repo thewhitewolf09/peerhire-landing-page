@@ -387,15 +387,6 @@
             if (refCode) {
                 document.getElementById('referrer').value = refCode;
             }
-
-            if (localStorage.getItem('peerHireWaitlistJoined')) {
-                const waitlistPos = localStorage.getItem('peerHireWaitlistPosition');
-                document.getElementById('waitlistNumber').textContent = waitlistPos;
-                document.getElementById('waitlistForm').classList.add('hidden');
-                document.getElementById('successMessage').classList.remove('hidden');
-                const referralLink = localStorage.getItem('peerHireReferralLink');
-                if (referralLink) updateReferralLink(referralLink);
-            }
         });
 
         document.getElementById('waitlistForm').addEventListener('submit', function () {
@@ -416,16 +407,12 @@
                         const isExisting = data.status === 'exists' || data.refCode;
 
                         const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
-                        const waitlistPos = localStorage.getItem('peerHireWaitlistPosition') || Math.floor(Math.random() * 500) + 1;
+                        const waitlistPos = Math.floor(Math.random() * 500) + 1;
 
                         updateReferralLink(referralLink);
                         document.getElementById('waitlistNumber').textContent = waitlistPos;
                         document.getElementById('waitlistForm').classList.add('hidden');
                         document.getElementById('successMessage').classList.remove('hidden');
-
-                        localStorage.setItem('peerHireWaitlistJoined', 'true');
-                        localStorage.setItem('peerHireWaitlistPosition', waitlistPos);
-                        localStorage.setItem('peerHireReferralLink', referralLink);
 
                         if (isExisting) {
                             document.querySelector('#successMessage h3').textContent = 'Already signed up 🙌';
@@ -444,8 +431,6 @@
                         document.getElementById('waitlistNumber').textContent = fallbackPos;
                         document.getElementById('waitlistForm').classList.add('hidden');
                         document.getElementById('successMessage').classList.remove('hidden');
-                        localStorage.setItem('peerHireWaitlistJoined', 'true');
-                        localStorage.setItem('peerHireWaitlistPosition', fallbackPos);
 
                         // Reset submit UI
                         submitted = false;
@@ -456,9 +441,6 @@
         });
 
         joinAgainBtn.addEventListener('click', () => {
-            localStorage.removeItem('peerHireWaitlistJoined');
-            localStorage.removeItem('peerHireWaitlistPosition');
-            localStorage.removeItem('peerHireReferralLink');
             document.getElementById('successMessage').classList.add('hidden');
             document.getElementById('waitlistForm').classList.remove('hidden');
             document.getElementById('waitlistForm').reset();
@@ -523,7 +505,7 @@
             }
         });
     </script>
-
+    
     <script>
         window.addEventListener('DOMContentLoaded', function () {
             // Helper to get URL query parameters
@@ -535,23 +517,13 @@
             const referrerInput = document.getElementById('referrer');
             const referrer = getQueryParam('ref');
 
-            // If there's a ref param, set it and store in localStorage
+            // If there's a ref param, set it in the form input (but don't store)
             if (referrer && referrerInput) {
                 referrerInput.value = referrer;
-                localStorage.setItem('peerHireRef', referrer);
             }
 
-            // Rehydrate the view if already joined
-            if (localStorage.getItem('peerHireWaitlistJoined')) {
-                const waitlistPos = localStorage.getItem('peerHireWaitlistPosition');
-                const waitlistNumberEl = document.getElementById('waitlistNumber');
-                const formEl = document.getElementById('waitlistForm');
-                const successMsgEl = document.getElementById('successMessage');
-
-                if (waitlistNumberEl) waitlistNumberEl.textContent = waitlistPos;
-                if (formEl) formEl.classList.add('hidden');
-                if (successMsgEl) successMsgEl.classList.remove('hidden');
-            }
+            // Rehydration logic removed since we're no longer storing anything
+            // So we won't auto-show the success message anymore on reload
 
             // Allow rejoining with a different email
             const joinAgainBtn = document.getElementById('joinAgainBtn');
@@ -559,9 +531,6 @@
 
             if (joinAgainBtn) {
                 joinAgainBtn.addEventListener('click', () => {
-                    localStorage.removeItem('peerHireWaitlistJoined');
-                    localStorage.removeItem('peerHireWaitlistPosition');
-
                     const formEl = document.getElementById('waitlistForm');
                     const successMsgEl = document.getElementById('successMessage');
 
@@ -577,6 +546,7 @@
             }
         });
     </script>
+
 
 
 </body>
