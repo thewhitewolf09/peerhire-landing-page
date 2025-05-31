@@ -104,7 +104,7 @@
 
             <div class="p-8 md:p-12">
                 <form id="waitlistForm" class="space-y-6" method="POST"
-                    action="https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec"
+                    action="https://script.google.com/macros/s/AKfycbzuqzeg0v_hwbbedL9N23iO1FOyiIC8j-lp1wC7UL4xQ-NlGYSvwCS9C6y39-FItiON/exec"
                     target="hidden_iframe" onsubmit="submitted=true;">
                     <input type="text" name="website" id="website" style="display:none;">
                     <input type="hidden" id="referrer" name="referrer" />
@@ -333,7 +333,7 @@
     </div>
 
     <script>
-        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec?leaderboard=true";
+        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbzuqzeg0v_hwbbedL9N23iO1FOyiIC8j-lp1wC7UL4xQ-NlGYSvwCS9C6y39-FItiON/exec?leaderboard=true";
 
         const leaderboardSection = document.getElementById('leaderboard');
         const leaderboardBody = document.getElementById('leaderboardBody');
@@ -401,7 +401,7 @@
             if (submitted) {
                 const email = document.getElementById('email').value;
 
-                fetch(`https://script.google.com/macros/s/AKfycbzjBVAZh1FXQjohp-z4XsRmKeOPpYkZiLlg-Z1u_d1hxlxpkgJJgaY3kvz1_Y7ciCAa/exec?email=${encodeURIComponent(email)}`)
+                fetch(`https://script.google.com/macros/s/AKfycbzuqzeg0v_hwbbedL9N23iO1FOyiIC8j-lp1wC7UL4xQ-NlGYSvwCS9C6y39-FItiON/exec?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
                         const isExisting = data.status === 'exists' || data.refCode;
@@ -505,7 +505,7 @@
             }
         });
     </script>
-    
+
     <script>
         window.addEventListener('DOMContentLoaded', function () {
             // Helper to get URL query parameters
