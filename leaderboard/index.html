@@ -77,7 +77,7 @@
 
     async function loadLeaderboard() {
       try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbyKCypfieZVlZlTE1o9m426hO_gJR3x1-2sFrBQueuBs2C4Jxvfsn_pcWPE1HUAI2Di/exec?leaderboard=true');
+        const res = await fetch('https://script.google.com/macros/s/AKfycbwYs_QLszpDIwqxeboNCferY743tuCyEP5iTUpNh87uNdkeho7yqxci5uou3THWDodg/exec?leaderboard=true');
         const data = await res.json();
 
         const tbody = document.getElementById("leaderboard");
