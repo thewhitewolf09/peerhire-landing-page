@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PeerHire Leaderboard</title>
+  <link rel="icon" href="favicon.png" type="image/png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lightblue3: '#F4F9F9',
+            lightblue2: '#CCF2F4',
+            lightblue1: '#6bc3eb',
+            lightgray: '#e2e2e2',
+            darkblue: '#20175e'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-lightblue3 text-darkblue min-h-screen flex flex-col items-center p-6">
+
+  <h1 class="text-3xl font-bold mb-2">📊 PeerHire Leaderboard</h1>
+  <p id="user-info" class="mb-6 text-lightblue1 text-sm text-center">Loading leaderboard...</p>
+
+  <div class="w-full max-w-5xl overflow-x-auto bg-white rounded-lg shadow">
+    <table class="min-w-full table-auto">
+      <thead class="bg-lightblue2 text-darkblue">
+        <tr>
+          <th class="p-3 text-left">#</th>
+          <th class="p-3 text-left">Name</th>
+          <th class="p-3 text-left">College</th>
+          <th class="p-3 text-left">Location</th>
+          <th class="p-3 text-left">Referrals</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard"></tbody>
+    </table>
+  </div>
+
+  <!-- 🔗 Referral Sharing -->
+  <div class="mt-10 text-center w-full max-w-xl">
+    <h4 class="text-lg font-semibold text-darkblue mb-2">Boost your rank – refer friends!</h4>
+    <p class="text-sm text-gray-600 mb-4">Share your unique link and climb the waitlist faster.</p>
+
+    <div class="flex flex-col md:flex-row items-center justify-center gap-2 mb-4">
+      <input type="text" id="referralLink" readonly
+        class="w-full md:w-2/3 px-4 py-2 border border-lightgray rounded-lg text-sm" value="" />
+      <button onclick="copyReferral()"
+        class="bg-lightblue1 hover:bg-darkblue text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all">
+        Copy
+      </button>
+    </div>
+
+    <div class="flex justify-center gap-4">
+      <a href="#" target="_blank" id="shareTwitter" class="text-[#1DA1F2] hover:underline text-sm font-semibold">
+        <i class="fa fa-twitter mr-1"></i>Share on X
+      </a>
+      <a href="#" target="_blank" id="shareLinkedIn" class="text-[#0077B5] hover:underline text-sm font-semibold">
+        <i class="fab fa-linkedin mr-1"></i>Share on LinkedIn
+      </a>
+      <a href="#" target="_blank" id="shareWhatsApp" class="text-[#25D366] hover:underline text-sm font-semibold">
+        <i class="fab fa-whatsapp mr-1"></i>Share on WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- FontAwesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <script>
+    const userEmail = new URLSearchParams(window.location.search).get("email")?.toLowerCase() || "";
+
+    async function loadLeaderboard() {
+      try {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbyKCypfieZVlZlTE1o9m426hO_gJR3x1-2sFrBQueuBs2C4Jxvfsn_pcWPE1HUAI2Di/exec?leaderboard=true');
+        const data = await res.json();
+
+        const tbody = document.getElementById("leaderboard");
+        tbody.innerHTML = "";
+
+        let userRank = null;
+        let referralLink = '';
+
+        data.forEach((user, index) => {
+          const isUser = user.email?.toLowerCase() === userEmail;
+          if (isUser) {
+            userRank = index + 1;
+            referralLink = `https://peerhire.in/join-waitlist?ref=${user.refCode}`;
+          }
+
+          const tr = document.createElement("tr");
+          tr.className = `border-b ${isUser ? 'bg-yellow-100 font-bold' : 'hover:bg-lightblue3'}`;
+          tr.innerHTML = `
+            <td class="p-3">${index + 1}</td>
+            <td class="p-3">${user.fullName}</td>
+            <td class="p-3">${user.college}</td>
+            <td class="p-3">${user.location}</td>
+            <td class="p-3">${user.referralCount || 0}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        const info = document.getElementById("user-info");
+        if (userEmail && userRank) {
+          info.textContent = `You're currently ranked #${userRank} 🔥`;
+          updateReferralLink(referralLink);
+        } else if (userEmail) {
+          info.textContent = `Email not found on leaderboard. Try sharing your referral link 😉`;
+        } else {
+          info.textContent = `Invite friends to rank higher and unlock benefits!`;
+        }
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("user-info").textContent = "Failed to load leaderboard.";
+      }
+    }
+
+    function updateReferralLink(url) {
+      document.getElementById("referralLink").value = url;
+      document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=Just%20joined%20@Peer_Hire%20early%20waitlist!%20Join%20using%20my%20link%20and%20get%20ahead:%20${encodeURIComponent(url)}`;
+      document.getElementById("shareLinkedIn").href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+      document.getElementById("shareWhatsApp").href = `https://api.whatsapp.com/send?text=Hey!%20Check%20out%20PeerHire%20for%20freelance%20gigs%20and%20opportunities.%20Use%20my%20link%20to%20sign%20up:%20${encodeURIComponent(url)}`;
+    }
+
+    function copyReferral() {
+      const input = document.getElementById("referralLink");
+      input.select();
+      input.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+    }
+
+    window.addEventListener("DOMContentLoaded", loadLeaderboard);
+  </script>
+
+</body>
+</html>
