@@ -104,7 +104,7 @@
 
             <div class="p-8 md:p-12">
                 <form id="waitlistForm" class="space-y-6" method="POST"
-                    action="https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec"
+                    action="https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec"
                     target="hidden_iframe" onsubmit="submitted=true;">
                     <input type="text" name="website" id="website" style="display:none;">
                     <input type="hidden" id="referrer" name="referrer" />
@@ -334,7 +334,7 @@
     </div>
 
     <script>
-        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec";
+        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec";
 
         fetch(LEADERBOARD_API_URL)
             .then(res => res.json())
@@ -394,7 +394,7 @@
             if (submitted) {
                 const email = document.getElementById('email').value;
 
-                fetch(`https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec?email=${encodeURIComponent(email)}`)
+                fetch(`https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data && data.refCode) {
@@ -404,7 +404,7 @@
                         }
 
                         // Display success and store waitlist position
-                        fetch('https://script.google.com/macros/s/AKfycbwUfBqAPwBNz6sEYHoiNVf9qjSlpbtjbZDPhzKvH9TecSUMTT-UVw66XD0wHsz-xdP6/exec')
+                        fetch('https://script.google.com/macros/s/AKfycbyLjc2Rh7cTCnuErO9qGcB9frcniFWGkyOyT3FpYRtumxqO01YfFakL7SrQxebZvtRv/exec')
                             .then(resp => resp.json())
                             .then(countData => {
                                 const waitlistPos = countData.count || Math.floor(Math.random() * 500) + 1;
