@@ -13,6 +13,8 @@
 
     <title>Join the Waitlist | PeerHire</title>
 
+    <script src="/env.js"></script>
+
     <script src="https://cdn.tailwindcss.com"></script>
 
 
@@ -103,9 +105,8 @@
 
 
             <div class="p-8 md:p-12">
-                <form id="waitlistForm" class="space-y-6" method="POST"
-                    action="https://script.google.com/macros/s/AKfycbw5GtQmBbUYwyTGpcYVyQlgS8fkbrq-RdknYO1U5P5rabvjhV2-ChT39_eTWQPG4ywO/exec"
-                    target="hidden_iframe" onsubmit="submitted=true;">
+                <form id="waitlistForm" class="space-y-6" method="POST" target="hidden_iframe"
+                    onsubmit="submitted=true;">
                     <input type="text" name="website" id="website" style="display:none;">
                     <input type="hidden" id="referrer" name="referrer" />
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -333,7 +334,15 @@
     </div>
 
     <script>
-        const LEADERBOARD_API_URL = "https://script.google.com/macros/s/AKfycbw5GtQmBbUYwyTGpcYVyQlgS8fkbrq-RdknYO1U5P5rabvjhV2-ChT39_eTWQPG4ywO/exec?leaderboard=true";
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("waitlistForm");
+            form.action = window.env.GOOGLE_SCRIPT_URL;
+        });
+
+    </script>
+
+    <script>
+        const LEADERBOARD_API_URL = `${window.env.GOOGLE_SCRIPT_URL}?leaderboard=true`;
 
         const leaderboardSection = document.getElementById('leaderboard');
         const leaderboardBody = document.getElementById('leaderboardBody');
@@ -401,7 +410,7 @@
             if (submitted) {
                 const email = document.getElementById('email').value;
 
-                fetch(`https://script.google.com/macros/s/AKfycbw5GtQmBbUYwyTGpcYVyQlgS8fkbrq-RdknYO1U5P5rabvjhV2-ChT39_eTWQPG4ywO/exec?email=${encodeURIComponent(email)}`)
+                fetch(`${window.env.GOOGLE_SCRIPT_URL}?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
                         const isExisting = data.status === 'exists' || data.refCode;
