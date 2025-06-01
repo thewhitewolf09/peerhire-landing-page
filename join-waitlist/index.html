@@ -413,8 +413,8 @@
                 fetch(`${window.env.GOOGLE_SCRIPT_URL}?email=${encodeURIComponent(email)}`)
                     .then(response => response.json())
                     .then(data => {
-                        const isExisting = data.status === 'exists' || data.refCode;
-
+                        const isExisting = data.status === 'exists';
+                        
                         console.log('Response Data:', data);
 
                         const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
