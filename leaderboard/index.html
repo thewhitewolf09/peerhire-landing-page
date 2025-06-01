@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PeerHire Leaderboard</title>
   <link rel="icon" href="favicon.png" type="image/png" />
 
@@ -24,6 +25,7 @@
     }
   </script>
 </head>
+
 <body class="bg-lightblue3 text-darkblue min-h-screen flex flex-col items-center p-6">
 
   <h1 class="text-3xl font-bold mb-2">📊 PeerHire Leaderboard</h1>
@@ -88,32 +90,45 @@
 
         let userRank = null;
         let referralLink = '';
+        let foundInLeaderboard = false;
 
         data.forEach((user, index) => {
           const isUser = user.email?.toLowerCase() === userEmail;
           if (isUser) {
             userRank = index + 1;
             referralLink = `https://peerhire.in/join-waitlist?ref=${user.refCode}`;
+            foundInLeaderboard = true;
           }
 
           const tr = document.createElement("tr");
           tr.className = `border-b ${isUser ? 'bg-yellow-100 font-bold' : 'hover:bg-lightblue3'}`;
           tr.innerHTML = `
-            <td class="p-3">${index + 1}</td>
-            <td class="p-3">${user.fullName}</td>
-            <td class="p-3">${user.college}</td>
-            <td class="p-3">${user.location}</td>
-            <td class="p-3">${user.referralCount || 0}</td>
-          `;
+        <td class="p-3">${index + 1}</td>
+        <td class="p-3">${user.fullName}</td>
+        <td class="p-3">${user.college}</td>
+        <td class="p-3">${user.location}</td>
+        <td class="p-3">${user.referralCount || 0}</td>
+      `;
           tbody.appendChild(tr);
         });
 
         const info = document.getElementById("user-info");
-        if (userEmail && userRank) {
+
+        if (userEmail && foundInLeaderboard) {
           info.textContent = `You're currently ranked #${userRank} 🔥`;
           updateReferralLink(referralLink);
         } else if (userEmail) {
-          info.textContent = `Email not found on leaderboard. Try sharing your referral link 😉`;
+          // 👇 Fetch fallback referral info from Waitlist
+          const waitlistRes = await fetch(`${window.env.GOOGLE_SCRIPT_URL}?email=${encodeURIComponent(userEmail)}`);
+          const waitlistData = await waitlistRes.json();
+
+          if (waitlistData.status === 'exists' && waitlistData.refCode) {
+            referralLink = `https://peerhire.in/join-waitlist?ref=${waitlistData.refCode}`;
+            updateReferralLink(referralLink);
+            info.textContent = `Email not found on leaderboard. You're still on the waitlist — share your link to climb up 🚀`;
+          } else {
+            info.textContent = `Email not found on waitlist. Try signing up first!`;
+          }
         } else {
           info.textContent = `Invite friends to rank higher and unlock benefits!`;
         }
@@ -142,4 +157,5 @@
   </script>
 
 </body>
+
 </html>
