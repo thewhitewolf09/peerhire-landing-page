@@ -415,10 +415,10 @@
                 .then(data => {
                     const isExisting = data.status === 'exists';
                     const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
-                    const waitlistPos = Math.floor(Math.random() * 500) + 1;
+                    const waitlistPos = data.waitlistPosition;
+                    document.getElementById('waitlistNumber').textContent = waitlistPos;
 
                     updateReferralLink(referralLink);
-                    document.getElementById('waitlistNumber').textContent = waitlistPos;
                     document.getElementById('waitlistForm').classList.add('hidden');
                     document.getElementById('successMessage').classList.remove('hidden');
 
