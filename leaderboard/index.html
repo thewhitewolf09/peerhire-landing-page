@@ -335,17 +335,6 @@
           </div>
         </div>
 
-        <!-- Progress Bar (for top referrers) -->
-        <div id="progressContainer" class="mb-8 hidden">
-          <div class="flex justify-between mb-2">
-            <span class="text-sm font-medium text-darkblue">Your progress to next tier</span>
-            <span class="text-sm font-medium text-darkblue" id="progressText">0/10</span>
-          </div>
-          <div class="w-full bg-gray-200 rounded-full h-2">
-            <div id="progressBar" class="progress-bar h-2 rounded-full" style="width: 0%"></div>
-          </div>
-        </div>
-
 
         <!-- Leaderboard Table -->
         <div class="rounded-2xl overflow-hidden shadow-md mb-10">
@@ -500,39 +489,39 @@
           }
 
           tr.innerHTML = `
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <div class="rank-badge ${index < 3 ? `rank-${index + 1}` : 'bg-gray-200 text-gray-700'}">
-                  ${index + 1}
-                </div>
-                ${index < 3 ? `<span class="ml-2 text-xs font-semibold ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-600'}">TOP ${index + 1}</span>` : ''}
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="flex items-center">
-                <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-r from-primary-100 to-primary-200 flex items-center justify-center text-primary-600 font-bold">
-                  ${user.fullName.charAt(0)}
-                </div>
-                <div class="ml-4">
-                  <div class="text-sm font-medium text-gray-900">${user.fullName}</div>
-                  ${isUser ? '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">You</span>' : ''}
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm text-gray-900">${user.college?.split(' | ')[0] || ''}</div>
-              <div class="text-xs text-gray-500">${user.college?.split(' | ')[1] || ''}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i> ${user.location || ''}
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-              <div class="text-sm font-semibold text-gray-900">${user.referralCount || 0}</div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              ${badges}
-            </td>
-          `;
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="flex items-center">
+            <div class="rank-badge ${index < 3 ? `rank-${index + 1}` : 'bg-gray-200 text-gray-700'}">
+              ${index + 1}
+            </div>
+            ${index < 3 ? `<span class="ml-2 text-xs font-semibold ${index === 0 ? 'text-yellow-500' : index === 1 ? 'text-gray-400' : 'text-amber-600'}">TOP ${index + 1}</span>` : ''}
+          </div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gradient-to-r from-primary-100 to-primary-200 flex items-center justify-center text-primary-600 font-bold">
+              ${user.fullName.charAt(0)}
+            </div>
+            <div class="ml-4">
+              <div class="text-sm font-medium text-gray-900">${user.fullName}</div>
+              ${isUser ? '<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">You</span>' : ''}
+            </div>
+          </div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="text-sm text-gray-900">${user.college?.split(' | ')[0] || ''}</div>
+          <div class="text-xs text-gray-500">${user.college?.split(' | ')[1] || ''}</div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          <i class="fas fa-map-marker-alt text-gray-400 mr-1"></i> ${user.location || ''}
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <div class="text-sm font-semibold text-gray-900">${user.referralCount || 0}</div>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+          ${badges}
+        </td>
+      `;
 
           tbody.appendChild(tr);
         });
@@ -543,22 +532,6 @@
         if (userEmail && foundInLeaderboard) {
           info.innerHTML = `<i class="fas fa-fire text-orange-500 mr-2"></i><span>You're currently ranked #${userRank} — keep sharing to climb higher! 🔥</span>`;
           updateReferralLink(referralLink);
-
-          // Show progress bar if user is in top 20
-          if (userRank <= 20) {
-            const nextTier = userRank <= 3 ? 1 : userRank <= 10 ? 10 : 20;
-            const referralsNeeded = nextTier === 1 ? 0 :
-              nextTier === 10 ? (data[9].referralCount - currentUserReferrals + 1) :
-                (data[19].referralCount - currentUserReferrals + 1);
-
-            document.getElementById("progressText").textContent = `${currentUserReferrals}/${nextTier === 1 ? data[0].referralCount : data[nextTier - 1].referralCount}`;
-            const progressPercent = nextTier === 1 ?
-              (currentUserReferrals / data[0].referralCount * 100) :
-              (currentUserReferrals / data[nextTier - 1].referralCount * 100);
-
-            document.getElementById("progressBar").style.width = `${Math.min(progressPercent, 100)}%`;
-            document.getElementById("progressContainer").classList.remove("hidden");
-          }
         } else if (userEmail) {
           // Fetch fallback referral info from Waitlist
           const waitlistRes = await fetch(`${window.env.GOOGLE_SCRIPT_URL}?email=${encodeURIComponent(userEmail)}`);
@@ -587,14 +560,14 @@
       } catch (err) {
         console.error(err);
         document.getElementById("leaderboardLoader").innerHTML = `
-          <div class="text-center py-12">
-            <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-3"></i>
-            <p class="text-gray-700 font-medium">Failed to load leaderboard data.</p>
-            <button onclick="loadLeaderboard()" class="mt-4 bg-primary-500 hover:bg-darkblue text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all">
-              <i class="fas fa-sync-alt mr-2"></i>Try Again
-            </button>
-          </div>
-        `;
+      <div class="text-center py-12">
+        <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-3"></i>
+        <p class="text-gray-700 font-medium">Failed to load leaderboard data.</p>
+        <button onclick="loadLeaderboard()" class="mt-4 bg-primary-500 hover:bg-darkblue text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all">
+          <i class="fas fa-sync-alt mr-2"></i>Try Again
+        </button>
+      </div>
+    `;
       }
     }
 
