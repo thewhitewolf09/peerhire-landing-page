@@ -398,57 +398,40 @@
             }
         });
 
-        document.getElementById('waitlistForm').addEventListener('submit', function () {
+        document.getElementById('waitlistForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // stop actual form submit
             submitted = true;
 
-            // Show spinner
             submitText.classList.add('hidden');
             submitLoader.classList.remove('hidden');
-        });
 
-        document.getElementById('hidden_iframe').addEventListener('load', function () {
-            if (submitted) {
-                const email = document.getElementById('email').value;
+            const formData = new FormData(this);
 
-                fetch(`${window.env.GOOGLE_SCRIPT_URL}?email=${encodeURIComponent(email)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const isExisting = data.status === 'exists';
-                        
-                        console.log('Response Data:', data);
+            fetch(window.env.GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const isExisting = data.status === 'exists';
+                    const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
+                    const waitlistPos = Math.floor(Math.random() * 500) + 1;
 
-                        const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
-                        const waitlistPos = Math.floor(Math.random() * 500) + 1;
+                    updateReferralLink(referralLink);
+                    document.getElementById('waitlistNumber').textContent = waitlistPos;
+                    document.getElementById('waitlistForm').classList.add('hidden');
+                    document.getElementById('successMessage').classList.remove('hidden');
 
-                        updateReferralLink(referralLink);
-                        document.getElementById('waitlistNumber').textContent = waitlistPos;
-                        document.getElementById('waitlistForm').classList.add('hidden');
-                        document.getElementById('successMessage').classList.remove('hidden');
+                    if (isExisting) {
+                        document.querySelector('#successMessage h3').textContent = 'Already signed up 🙌';
+                        document.querySelector('#successMessage p').textContent = 'You’re already on the waitlist. Share your referral link to move up!';
+                        document.getElementById('waitlistPositionText').classList.add('hidden');
+                    }
 
-                        if (isExisting) {
-                            document.querySelector('#successMessage h3').textContent = 'Already signed up 🙌';
-                            document.querySelector('#successMessage p').textContent = 'You’re already on the waitlist. Share your referral link to move up!';
-                            document.getElementById('waitlistPositionText').classList.add('hidden');
-                        }
-
-                        // Reset submit UI
-                        submitted = false;
-                        submitText.classList.remove('hidden');
-                        submitLoader.classList.add('hidden');
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        const fallbackPos = Math.floor(Math.random() * 500) + 1;
-                        document.getElementById('waitlistNumber').textContent = fallbackPos;
-                        document.getElementById('waitlistForm').classList.add('hidden');
-                        document.getElementById('successMessage').classList.remove('hidden');
-
-                        // Reset submit UI
-                        submitted = false;
-                        submitText.classList.remove('hidden');
-                        submitLoader.classList.add('hidden');
-                    });
-            }
+                    submitted = false;
+                    submitText.classList.remove('hidden');
+                    submitLoader.classList.add('hidden');
+                });
         });
 
         joinAgainBtn.addEventListener('click', () => {
