@@ -406,6 +406,8 @@
                     .then(data => {
                         const isExisting = data.status === 'exists' || data.refCode;
 
+                        console.log('Response Data:', data);
+
                         const referralLink = data.referralLink || `https://peerhire.in/join-waitlist?ref=${data.refCode}`;
                         const waitlistPos = Math.floor(Math.random() * 500) + 1;
 
@@ -546,8 +548,6 @@
             }
         });
     </script>
-
-
 
 </body>
 
