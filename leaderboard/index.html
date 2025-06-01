@@ -28,50 +28,62 @@
 
 <body class="bg-lightblue3 text-darkblue min-h-screen flex flex-col items-center p-6">
 
-  <h1 class="text-3xl font-bold mb-2">📊 PeerHire Leaderboard</h1>
-  <p id="user-info" class="mb-6 text-lightblue1 text-sm text-center">Loading leaderboard...</p>
-
-  <div class="w-full max-w-5xl overflow-x-auto bg-white rounded-lg shadow">
-    <table class="min-w-full table-auto">
-      <thead class="bg-lightblue2 text-darkblue">
-        <tr>
-          <th class="p-3 text-left">#</th>
-          <th class="p-3 text-left">Name</th>
-          <th class="p-3 text-left">College</th>
-          <th class="p-3 text-left">Location</th>
-          <th class="p-3 text-left">Referrals</th>
-        </tr>
-      </thead>
-      <tbody id="leaderboard"></tbody>
-    </table>
-  </div>
-
-  <!-- 🔗 Referral Sharing -->
-  <div class="mt-10 text-center w-full max-w-xl">
-    <h4 class="text-lg font-semibold text-darkblue mb-2">Boost your rank – refer friends!</h4>
-    <p class="text-sm text-gray-600 mb-4">Share your unique link and climb the waitlist faster.</p>
-
-    <div class="flex flex-col md:flex-row items-center justify-center gap-2 mb-4">
-      <input type="text" id="referralLink" readonly
-        class="w-full md:w-2/3 px-4 py-2 border border-lightgray rounded-lg text-sm" value="" />
-      <button onclick="copyReferral()"
-        class="bg-lightblue1 hover:bg-darkblue text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all">
-        Copy
-      </button>
+  <div class="max-w-5xl w-full mx-auto mt-10">
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+      <!-- Leaderboard Header -->
+      <div class="gradient-bg text-white p-6 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">📊 PeerHire Leaderboard</h1>
+        <p id="user-info" class="text-base md:text-lg text-cyan-200 font-medium">Loading leaderboard...</p>
+      </div>
+  
+      <!-- Leaderboard Table -->
+      <div class="overflow-x-auto p-6">
+        <table class="min-w-[600px] w-full text-sm text-left text-gray-700">
+          <thead class="uppercase bg-[#F4F9F9] text-xs text-gray-500">
+            <tr>
+              <th class="px-4 py-3">#</th>
+              <th class="px-4 py-3">Name</th>
+              <th class="px-4 py-3">College</th>
+              <th class="px-4 py-3">Location</th>
+              <th class="px-4 py-3">Referrals</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboard" class="bg-white divide-y divide-gray-200">
+            <!-- Dynamic content goes here -->
+          </tbody>
+        </table>
+      </div>
     </div>
-
-    <div class="flex justify-center gap-4">
-      <a href="#" target="_blank" id="shareTwitter" class="text-[#1DA1F2] hover:underline text-sm font-semibold">
-        <i class="fa fa-twitter mr-1"></i>Share on X
-      </a>
-      <a href="#" target="_blank" id="shareLinkedIn" class="text-[#0077B5] hover:underline text-sm font-semibold">
-        <i class="fab fa-linkedin mr-1"></i>Share on LinkedIn
-      </a>
-      <a href="#" target="_blank" id="shareWhatsApp" class="text-[#25D366] hover:underline text-sm font-semibold">
-        <i class="fab fa-whatsapp mr-1"></i>Share on WhatsApp
-      </a>
+  
+    <!-- Referral Sharing CTA -->
+    <div class="mt-12 bg-[#EAFBFF] rounded-xl shadow-inner p-6 md:p-8 text-center max-w-3xl mx-auto">
+      <h4 class="text-xl font-semibold text-darkblue mb-2">Boost your rank – refer friends! 🧑‍🤝‍🧑</h4>
+      <p class="text-sm text-gray-700 mb-4">Share your unique link and climb the waitlist faster.</p>
+  
+      <div class="flex flex-col md:flex-row items-center justify-center gap-2 mb-4">
+        <input type="text" id="referralLink" readonly
+          class="w-full md:w-2/3 px-4 py-2 border border-gray-300 rounded-lg text-sm bg-white shadow-sm"
+          placeholder="your-peerhire-referral-link.com" value="" />
+        <button onclick="copyReferral()"
+          class="bg-[#6bc3eb] hover:bg-[#20175e] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all">
+          Copy
+        </button>
+      </div>
+  
+      <div class="flex justify-center gap-4 mt-2">
+        <a href="#" target="_blank" id="shareTwitter" class="text-[#1DA1F2] hover:underline text-sm font-semibold">
+          <i class="fa fa-twitter mr-1"></i>Share on X
+        </a>
+        <a href="#" target="_blank" id="shareLinkedIn" class="text-[#0077B5] hover:underline text-sm font-semibold">
+          <i class="fab fa-linkedin mr-1"></i>Share on LinkedIn
+        </a>
+        <a href="#" target="_blank" id="shareWhatsApp" class="text-[#25D366] hover:underline text-sm font-semibold">
+          <i class="fab fa-whatsapp mr-1"></i>Share on WhatsApp
+        </a>
+      </div>
     </div>
   </div>
+  
 
 
   <!-- FontAwesome for icons -->
